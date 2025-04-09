@@ -25,6 +25,7 @@ Peach-Editor，Web 版电子病历编辑器。其用户界面秉持简洁直观�
 
 
 
-#### 官方网址
+#### 关于我们
 
-[emr.jpeach.xyz](https://emr.jpeach.xyz/)
+[发布网址](https://emr.jpeach.xyz/)
+[在线编辑器](https://peach-editor.netlify.app/)
