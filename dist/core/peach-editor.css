@@ -1,0 +1,368 @@
+html,
+body {
+    width: 100%;
+    height: 100%;
+    padding: 0px;
+    margin: 0px;
+}
+
+.editor-window {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    table-layout: fixed;
+}
+
+.editor-north {
+    height: 75px;
+    padding: 0px;
+    vertical-align: top;
+}
+
+.editor-center {
+    background-color: #7e7e7e;
+    height: 100%;
+    overflow: auto;
+}
+
+.editor-south {
+    height: 30px;
+    background-color: #e0ecff;
+    cursor: default;
+}
+
+.editor-container {
+    position: relative;
+}
+
+.editor-input {
+    z-index: 0;
+    position: absolute;
+    width: 2px;
+}
+
+.editor-background-canvas {
+    z-index: 1;
+    background-color: #ffffff;
+    position: absolute;
+    display: inline-block;
+}
+
+.editor-textground-canvas {
+    z-index: 2;
+    display: inline-block;
+    position: absolute;
+}
+
+.editor-maskground-canvas {
+    z-index: 3;
+    display: inline-block;
+    position: absolute;
+}
+
+.editor-foreground-canvas {
+    z-index: 4;
+    position: absolute;
+    display: inline-block;
+    cursor: text;
+}
+
+.editor-btn {
+    border: none;
+    padding: 6px;
+    background-color: transparent;
+}
+
+.editor-label {
+    border-right: 1px solid #979797;
+    color: #616161;
+    padding: 0px 10px;
+}
+
+.editor-btn:hover {
+    background-color: #e4e4e4;
+    cursor: pointer;
+}
+
+.menu-selected {
+    font-weight: 700;
+    color: #16baaa;
+}
+
+.editor-menu {
+    font-size: 14px;
+    color: #000;
+    cursor: default;
+    min-width: 110px;
+    background-color: #ffffff;
+    border-collapse: collapse;
+    border: 1px solid #d4d4d4;
+}
+
+.editor-menu .list-btn,
+.editor-menu .list-item,
+.editor-menu .list-view {
+    border-radius: 4px;
+    padding: 4px 10px;
+    line-height: 28px;
+    margin: 10px 10px;
+}
+
+.editor-menu .list-view {
+    text-align: center;
+}
+
+.editor-menu .list-btn:hover,
+.editor-menu .list-item:hover,
+.editor-menu .list-view:not(.disabled):hover {
+    background-color: #e4e4e4;
+    color: #16baaa;
+    cursor: pointer;
+}
+
+.editor-menu .list-view img {
+    max-height: 100px;
+}
+
+.editor-menu .color-cell {
+    width: 20px;
+    height: 20px;
+    border: 2px solid #d4d4d4;
+    cursor: pointer;
+    margin: 4px;
+}
+
+.editor-menu .color-cell:hover {
+    border: 2px solid #080808;
+}
+
+.editor-menu .color-label {
+    padding: 0px 10px;
+    height: 30px;
+}
+
+.editor-menu .color-palette {
+    padding: 0px 10px;
+    height: 30px;
+    cursor: pointer;
+}
+
+.editor-menu .color-palette:hover {
+    background-color: #e4e4e4;
+    color: #16baaa;
+}
+
+.editor-menu .table-insert-cell div {
+    width: 15px;
+    height: 15px;
+    border: 1px solid #8f8f8f;
+    margin: 2px;
+}
+
+.editor-menu .table-insert-cell.selected div {
+    border: 1px solid #1e11d3 !important;
+    background-color: #cccbd3;
+}
+
+.editor-menu .cellmenu-group {
+    font-size: 12px;
+    font-weight: 700;
+    height: 34px;
+    vertical-align: middle;
+}
+
+.editor-menu .cellmenu-cell {
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    text-align: center;
+    border-radius: 4px;
+}
+
+.editor-menu .cellmenu-cell:hover {
+    background-color: #e7e6ec;
+}
+
+
+
+
+
+
+
+
+.editor-form .input-text,
+.editor-form .input-select,
+.editor-form .input-number {
+    min-width: 100px;
+    height: 26px;
+    line-height: 26px;
+    border: 1px solid #adadad;
+    box-sizing: border-box;
+}
+
+.editor-form .input-number {
+    padding: 0 4px;
+    text-align: right;
+}
+
+.editor-form .input-text {
+    padding: 0 4px;
+}
+
+.editor-form .input-suffix {
+    line-height: 26px;
+}
+
+.editor-form .input-label {
+    line-height: 26px;
+    min-width: 50px;
+    text-align: right;
+    display: block;
+}
+
+.editor-form .input-radio {
+    margin: 0;
+}
+
+.editor-form .layout-table {
+    margin: 10px;
+}
+
+.editor-form .table-label {
+    width: 60px;
+    text-align: right;
+}
+
+.editor-form .table-input {
+    width: 80px;
+}
+
+.editor-form .layout-table .table-title {
+    padding-left: 10px;
+    font-size: 1em;
+    color: #a1a1a1;
+    border-bottom: 1px solid #dadada;
+}
+
+.editor-form .layout-table .table-label,
+.editor-form .layout-table .table-input {
+    padding: 8px 4px;
+}
+
+.editor-form .layout-table .input-text,
+.editor-form .layout-table .input-select,
+.editor-form .layout-table .input-number {
+    width: 100%;
+}
+
+
+.editor-form .watermark-canvas {
+    width: 120px;
+    height: 180px;
+    border: 1px solid #8b8b8b;
+    margin: 0 20px;
+}
+
+.editor-form .m13y-field1-cell {
+    text-align: left;
+    vertical-align: bottom;
+}
+
+.editor-form .m13y-field-number {
+    width: 45px;
+    margin: 10px 0px;
+}
+
+.editor-form .m13y-field-date {
+    width: 100px;
+}
+
+.editor-form .t10m-leg-table,
+.editor-form .t10m-btn-table {
+    text-align: center;
+    border-collapse: collapse;
+}
+
+.editor-form .t10m-btn {
+    cursor: pointer;
+    min-width: 70px;
+}
+
+.editor-form .t10m-2btn {
+    height: 50px;
+    width: 70px;
+}
+
+.editor-form .t10m-leg-table .tooth {
+    display: inline-block;
+    border: 1px solid #c4c4c4;
+    text-align: center;
+    line-height: 28px;
+    height: 30px;
+    width: 30px;
+    cursor: pointer;
+}
+
+.editor-form .t10m-panel {
+    margin: 10px 4px;
+}
+
+.editor-form .t10m-leg-table .tooth:hover {
+    background-color: #b9b9b9;
+}
+
+.editor-form .t10m-leg-table .left {
+    text-align: right;
+    border-right: 2px solid #000;
+    padding: 4px;
+}
+
+.editor-form .t10m-leg-table .right {
+    text-align: left;
+    border-left: 2px solid #000;
+    padding: 4px;
+}
+
+.editor-form .t10m-leg-table .molars.up {
+    border-radius: 0 0 8px 8px;
+}
+
+.editor-form .t10m-leg-table .cuspid.up {
+    border-radius: 0 0 20px 20px;
+}
+
+.editor-form .t10m-leg-table .molars.down {
+    border-radius: 8px 8px 0 0;
+}
+
+.editor-form .t10m-leg-table .cuspid.down {
+    border-radius: 20px 20px 0 0;
+}
+
+.editor-form .about-title {
+    font-size: 24px;
+    text-align: center;
+    padding: 16px;
+    font-weight: 700;
+}
+
+.editor-form .about-subtitle {
+    font-size: 16px;
+    text-align: center;
+    padding: 16px;
+}
+
+.editor-form .about-label {
+    width: 45%;
+    text-align: right;
+    color: #000;
+    padding: 4px;
+}
+
+.editor-form .about-value {
+    text-align: left;
+    width: 55%;
+    text-decoration: underline;
+    color: #1e11d3;
+    padding: 4px;
+}

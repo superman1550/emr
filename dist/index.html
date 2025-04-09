@@ -1,0 +1,320 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Peach-Editor 编辑器</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="Keywords" content="编辑器,电子病例编辑器,Web版EMR编辑器" />
+    <meta name="Description" content="Peach-Editor是一款优秀的Web版电子病例编辑器解决方案，支持文本编辑、表格、分页、水印等，兼容主流浏览器及IE。" />
+    <link rel="shortcut icon" href="logo.png">
+    <link rel="stylesheet" href="./core/layui.css">
+    <link rel="stylesheet" href="./core/peach-editor.css">
+    <link rel="stylesheet" href="./core/icon/iconfont.css">
+    <link rel="stylesheet" href="./core/icon2/iconfont.css">
+    <script src="./core/layui.js"></script>
+    <script src="./core/peach-ui.js"></script>
+    <script src="./core/peach-layui-min.js"></script>
+    <script src="./core/peach-editor-min.js"></script>
+</head>
+
+<body>
+    <table class="editor-window">
+        <tr>
+            <td class="editor-north">
+                <div class="layui-tab layui-tab-brief" lay-filter="menu-panel">
+                    <ul class="layui-tab-title">
+                        <li>文件</li>
+                        <li class="layui-this">编辑</li>
+                        <li>插入</li>
+                        <li>页面</li>
+                        <li>帮助</li>
+                    </ul>
+                    <div class="layui-tab-content">
+                        <div class="layui-tab-item">
+                            <div class="layui-btn-group">
+                                <button type="button" class="layui-btn layui-btn-primary" id="doc-import">
+                                    <i class="layui-icon layui-icon-import"></i>导入
+                                </button>
+                                <button type="button" class="layui-btn layui-btn-primary" id="doc-save">
+                                    <i class="layui-icon layui-icon-save"></i> 保存
+                                </button>
+                                <button type="button" class="layui-btn  layui-btn-primary" id="doc-download">
+                                    <i class="layui-icon layui-icon-download"></i>下载
+                                </button>
+                                <button type="button" class="layui-btn  layui-btn-primary" id="doc-preview">
+                                    <i class="layui-icon layui-icon-preview"></i>预览
+                                </button>
+                                <button type="button" class="layui-btn  layui-btn-primary" id="doc-print">
+                                    <i class="layui-icon layui-icon-printer"></i>打印
+                                </button>
+                                <button type="button" class="layui-btn layui-btn-primary" id="doc-exp-image">
+                                    <i class="layui-icon layui-icon-picture"></i> 导出为图片
+                                </button>
+                                <button type="button" class="layui-btn layui-btn-primary" id="doc-exp-pdf">
+                                    <i class="layui-icon layui-icon-export-pdf"></i>导出为PDF
+                                </button>
+                            </div>
+                        </div>
+                        <div class="layui-tab-item layui-show">
+                            <div class="layui-btn-group">
+                                <button type="button" class="layui-btn layui-btn-primary" id="doc-paste" title="粘贴">
+                                    <i class="layui-icon layui-icon-paste layui-font-20"></i>
+                                </button>
+                                <button type="button" class="layui-btn layui-btn-primary" id="doc-copy" title="复制">
+                                    <i class="layui-icon layui-icon-copy layui-font-20"></i>
+                                </button>
+                                <button type="button" class="layui-btn layui-btn-primary" id="doc-cut" title="剪切">
+                                    <i class="layui-icon layui-icon-cut layui-font-20"></i>
+                                </button>
+                                <button type="button" class="layui-btn layui-btn-primary" id="doc-undo" title="回退">
+                                    <i class="layui-icon layui-icon-undo layui-font-20"></i>
+                                </button>
+                                <button type="button" class="layui-btn layui-btn-primary" id="doc-redo" title="重做">
+                                    <i class="layui-icon layui-icon-redo layui-font-20"></i>
+                                </button>
+                            </div>
+                            <div style="display:inline-block;vertical-align: middle;">
+                                <div style="width:120px;" class="layui-form" lay-filter="font-family-form-filter">
+                                    <select id="font-family" name="family" lay-filter="font-family-filter">
+
+                                    </select>
+                                </div>
+                            </div>
+                            <div style="display:inline-block;vertical-align: middle;">
+                                <div style="width:70px;" class="layui-form" lay-filter="font-size-form-filter">
+                                    <select id="font-size" name="size" lay-filter="font-size-filter">
+
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="layui-btn-group">
+                                <button type="button" class="layui-btn layui-btn-primary" id="font-increase"
+                                    title="字体增大">
+                                    <i class="layui-icon layui-icon-font-increase layui-font-20"></i>
+                                </button>
+                                <button type="button" class="layui-btn layui-btn-primary" id="font-decrease"
+                                    title="字体减小">
+                                    <i class="layui-icon layui-icon-font-decrease layui-font-20"></i>
+                                </button>
+                                <button type="button" class="layui-btn layui-btn-primary" style="color:#000;"
+                                    id="font-color" title="字体颜色">
+                                    <i class="layui-icon layui-icon-font-color layui-font-20"></i>
+                                    <i class="layuix-icon layuix-icon-down layui-font-12"></i>
+                                </button>
+                            </div>
+                            <div class="layui-btn-group">
+                                <button type="button" class="layui-btn layui-btn-primary" id="font-bold" title="加粗">
+                                    <i class="layui-icon layui-icon-bold layui-font-20"></i>
+                                </button>
+                                <button type="button" class="layui-btn layui-btn-primary" id="font-italic" title="斜体">
+                                    <i class="layui-icon layui-icon-italic layui-font-20"></i>
+                                </button>
+                                <button type="button" class="layui-btn layui-btn-primary" id="font-underline"
+                                    title="下划线">
+                                    <i class="layui-icon layui-icon-underline layui-font-20"></i>
+                                </button>
+                                <button type="button" class="layui-btn layui-btn-primary" id="font-strikethrough"
+                                    title="删除线">
+                                    <i class="layui-icon layui-icon-strikethrough layui-font-20"></i>
+                                </button>
+                                <button type="button" class="layui-btn layui-btn-primary" lay-repel="script"
+                                    lay-value="sup" lay-default="nor" title="上标">
+                                    <i class="layui-icon layui-icon-superscript layui-font-20"></i>
+                                </button>
+                                <button type="button" class="layui-btn layui-btn-primary" lay-repel="script"
+                                    lay-value="sub" lay-default="nor" title="下标">
+                                    <i class="layui-icon layui-icon-subscript layui-font-20"></i>
+                                </button>
+                            </div>
+                            <div class="layui-btn-group">
+                                <button type="button" class="layui-btn layui-btn-primary editor-align" lay-radio="align"
+                                    lay-value="left" title="左对齐">
+                                    <i class="layui-icon layui-icon-align-left layui-font-20"></i>
+                                </button>
+                                <button type="button" class="layui-btn layui-btn-primary editor-align" lay-radio="align"
+                                    lay-value="center" title="居中对齐">
+                                    <i class="layui-icon layui-icon-align-center layui-font-20"></i>
+                                </button>
+                                <button type="button" class="layui-btn layui-btn-primary editor-align" lay-radio="align"
+                                    lay-value="right" title="右对齐">
+                                    <i class="layui-icon layui-icon-align-right layui-font-20"></i>
+                                </button>
+                                <button type="button" class="layui-btn layui-btn-primary editor-align" lay-radio="align"
+                                    lay-value="both" title="两端对齐">
+                                    <i class="layui-icon layui-icon-align-both layui-font-20"></i>
+                                </button>
+                                <button type="button" class="layui-btn layui-btn-primary editor-align" lay-radio="align"
+                                    lay-value="dispersed" title="分散对齐">
+                                    <i class="layui-icon layui-icon-align-dispersed layui-font-20"></i>
+                                </button>
+                            </div>
+
+                            <div class="layui-btn-group">
+                                <button type="button" class="layui-btn layui-btn-primary" id="editor-line-spac"
+                                    title="行距">
+                                    <i class="layui-icon layui-icon-line-spacing layui-font-20"></i>
+                                    <i class="layuix-icon layuix-icon-down layui-font-12"></i>
+                                </button>
+                                <button type="button" class="layui-btn layui-btn-primary" id="editor-outdent"
+                                    title="减少缩进量">
+                                    <i class="layui-icon layui-icon-outdent layui-font-20"></i>
+                                </button>
+                                <button type="button" class="layui-btn layui-btn-primary" id="editor-indent"
+                                    title="增加缩进量">
+                                    <i class="layui-icon layui-icon-indent layui-font-20"></i>
+                                </button>
+                            </div>
+
+                            <div class="layui-btn-group">
+                                <button type="button" class="layui-btn layui-btn-primary" title="查找">
+                                    <i class="layui-icon layui-icon-find layui-font-20"></i>
+                                </button>
+                                <button type="button" class="layui-btn layui-btn-primary" title="替换">
+                                    <i class="layui-icon layui-icon-replace layui-font-20"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="layui-tab-item">
+                            <div class="layui-btn-group">
+                                <button class="layui-btn layui-btn-primary" id="insert-table">
+                                    <i class="layui-icon layui-icon-table layui-font-18"></i>表格
+                                    <i class="layuix-icon layuix-icon-down layui-font-12"></i>
+                                </button>
+                                <button class="layui-btn layui-btn-primary" id="insert-image">
+                                    <i class="layui-icon layui-icon-picture layui-font-18"></i>图片
+                                </button>
+                                <button class="layui-btn layui-btn-primary" id="insert-shape">
+                                    <i class="layui-icon layui-icon-shape layui-font-18"></i>形状
+                                    <i class="layuix-icon layuix-icon-down layui-font-12"></i>
+                                </button>
+                                <button class="layui-btn layui-btn-primary" id="insert-symbol">
+                                    <i class="layui-icon layui-icon-omega layui-font-18"></i>特殊符号
+                                </button>
+                                <button class="layui-btn layui-btn-primary" id="insert-medicine">
+                                    <i class="layui-icon layui-icon-medicine layui-font-18"></i>医学表达式
+                                    <i class="layuix-icon layuix-icon-down layui-font-12"></i>
+                                </button>
+                                <button class="layui-btn layui-btn-primary" id="insert-divider">
+                                    <i class="layui-icon layui-icon-divider layui-font-18"></i>分割线
+                                    <i class="layuix-icon layuix-icon-down layui-font-12"></i>
+                                </button>
+                                <button class="layui-btn layui-btn-primary" id="insert-calendar">
+                                    <i class="layui-icon layui-icon-calendar layui-font-18"></i>日期
+                                    <i class="layuix-icon layuix-icon-down layui-font-12"></i>
+                                </button>
+                                <button class="layui-btn layui-btn-primary" id="insert-graphic-code">
+                                    <i class="layui-icon layui-icon-code layui-font-18"></i>图形码
+                                    <i class="layuix-icon layuix-icon-down layui-font-12"></i>
+                                </button>
+                                <button class="layui-btn layui-btn-primary" id="insert-widget">
+                                    <i class="layui-icon layui-icon-form layui-font-18"></i>控件
+                                    <i class="layuix-icon layuix-icon-down layui-font-12"></i>
+                                </button>
+                                <button class="layui-btn layui-btn-primary" id="insert-signature">
+                                    <i class="layui-icon layui-icon-signature1 layui-font-18"></i>签名
+                                    <i class="layuix-icon layuix-icon-down layui-font-12"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="layui-tab-item">
+                            <div class="layui-btn-group">
+                                <button class="layui-btn layui-btn-primary" id="paper-margin-set">
+                                    <i class="layui-icon layui-icon-paper-margin layui-font-18"></i>页边距
+                                    <i class="layuix-icon layuix-icon-down layui-font-12"></i>
+                                </button>
+                                <button class="layui-btn layui-btn-primary" id="paper-size-set">
+                                    <i class="layui-icon layui-icon-paper-size layui-font-18"></i>纸张大小
+                                    <i class="layuix-icon layuix-icon-down layui-font-12"></i>
+                                </button>
+                                <button class="layui-btn layui-btn-primary" id="paper-orientation-set">
+                                    <i class="layui-icon layui-icon-paper-orientation layui-font-18"></i>纸张方向
+                                    <i class="layuix-icon layuix-icon-down layui-font-12"></i>
+                                </button>
+                                <button class="layui-btn layui-btn-primary" id="page-num-set">
+                                    <i class="layui-icon layui-icon-page-num layui-font-18"></i>页码
+                                    <i class="layuix-icon layuix-icon-down layui-font-12"></i>
+                                </button>
+                                <button class="layui-btn layui-btn-primary" id="paper-watermark">
+                                    <i class="layui-icon layui-icon-watermark layui-font-18"></i>水印
+                                    <i class="layuix-icon layuix-icon-down layui-font-12"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="layui-tab-item">
+                            <div class="layui-btn-group">
+                                <button type="button" class="layui-btn layui-btn-primary" id="system-about">
+                                    <i class="layui-icon layui-icon-about"></i>关于
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div class="editor-center" id="panel-scroll">
+                    <div id="panel-editor-domid" class="editor-container"></div>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td class="editor-south">
+                <table>
+                    <tr>
+                        <td>
+                            <div style="width: 400px;">
+                                <span class="editor-label">
+                                    <button class="editor-btn" title="大纲"><i
+                                            class="layui-icon layui-icon-outline"></i></button>
+                                    <button class="editor-btn" title="分页"><i
+                                            class="layui-icon layui-icon-page-break"></i></button>
+                                </span>
+                                <span class="editor-label">
+                                    <span>页面:</span>
+                                    <span id="status-page-info">1/1</span>
+                                    <span>字数:</span>
+                                    <span id="status-char-info">1</span>
+                                </span>
+                            </div>
+                        </td>
+                        <td style="width:100%;">
+
+                        </td>
+                        <td>
+                            <div style="width: 400px;text-align: right;">
+                                <span class="editor-value editor-button" id="status-zoom-show">100%</span>
+                                <button class="editor-btn" title="缩小" id="status-zoom-reduce">
+                                    <i class="layui-icon layui-icon-remove"></i>
+                                </button>
+                                <input id="status-zoom-slider" style="width:120px;vertical-align:middle;" type="range"
+                                    min="0" max="20" value="10" list="status-zoom-list"></input>
+                                <datalist id="status-zoom-list">
+                                    <option value="0"></option>
+                                    <option value="10"></option>
+                                    <option value="20"></option>
+                                </datalist>
+                                <button class="editor-btn" title="放大" id="status-zoom-magnify">
+                                    <i class="layui-icon layui-icon-add"></i>
+                                </button>
+                                <button class="editor-btn" title="最佳显示比例" id="status-zoom-best">
+                                    <i class="layui-icon layui-icon-scale"></i>
+                                </button>
+                                <button class="editor-btn" title="全屏" id="status-zoom-full">
+                                    <i class="layui-icon layui-icon-full"></i>
+                                </button>
+                            </div>
+
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+    <input type="file" id="input-image" style="display: none" accept="image/*">
+    <input type="file" id="input-file" style="display: none" accept="*.pxd">
+</body>
+
+</html>
