@@ -6,6 +6,83 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "11493908",
+      "name": "通过",
+      "font_class": "pass",
+      "unicode": "e647",
+      "unicode_decimal": 58951
+    },
+    {
+      "icon_id": "24848472",
+      "name": "取消预约",
+      "font_class": "cancel",
+      "unicode": "e648",
+      "unicode_decimal": 58952
+    },
+    {
+      "icon_id": "8554290",
+      "name": "提交",
+      "font_class": "commit",
+      "unicode": "e646",
+      "unicode_decimal": 58950
+    },
+    {
+      "icon_id": "10884442",
+      "name": "朋友圈历史记录查看明细",
+      "font_class": "history",
+      "unicode": "e61d",
+      "unicode_decimal": 58909
+    },
+    {
+      "icon_id": "8211996",
+      "name": "新增批注",
+      "font_class": "comments",
+      "unicode": "eb70",
+      "unicode_decimal": 60272
+    },
+    {
+      "icon_id": "7817231",
+      "name": "显示密码",
+      "font_class": "show",
+      "unicode": "e617",
+      "unicode_decimal": 58903
+    },
+    {
+      "icon_id": "7934600",
+      "name": "密码不显示",
+      "font_class": "hide",
+      "unicode": "e614",
+      "unicode_decimal": 58900
+    },
+    {
+      "icon_id": "44181541",
+      "name": "down",
+      "font_class": "next-m",
+      "unicode": "ecb5",
+      "unicode_decimal": 60597
+    },
+    {
+      "icon_id": "37969979",
+      "name": "down",
+      "font_class": "prev-m",
+      "unicode": "e610",
+      "unicode_decimal": 58896
+    },
+    {
+      "icon_id": "44181540",
+      "name": "prev",
+      "font_class": "next-y",
+      "unicode": "ecb4",
+      "unicode_decimal": 60596
+    },
+    {
+      "icon_id": "37969217",
+      "name": "prev",
+      "font_class": "prev-y",
+      "unicode": "e60c",
+      "unicode_decimal": 58892
+    },
+    {
       "icon_id": "23106119",
       "name": "icon_页眉",
       "font_class": "header",

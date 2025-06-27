@@ -1,0 +1,44 @@
+<div class="editor-form">
+    <table>
+        <tr>
+            <td>
+                <table class="layout-table">
+                    <tr>
+                        <td class="table-label">内容:</td>
+                        <td class="table-input"> <input id="form-watermark-text" class="input-text"> </input> </td>
+                    </tr>
+                    <tr>
+                        <td class="table-label"> 字体: </td>
+                        <td class="table-input"> <select id="form-watermark-family" class="input-select"> </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="table-label"> 字号: </td>
+                        <td class="table-input"> <select id="form-watermark-size" class="input-select"> </select> </td>
+                    </tr>
+                    <tr>
+                        <td class="table-label"> 版式: </td>
+                        <td>
+                            <div>
+                                <input type="radio" class="input-radio" id="form-watermark-style-0"
+                                    name="form-watermark-style" value="0">
+                                <label for="form-watermark-style-0">水平</label>
+                                <input type="radio" class="input-radio" id="form-watermark-style-1"
+                                    name="form-watermark-style" value="1">
+                                <label for="form-watermark-style-1">倾斜</label>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="table-label"> 透明度: </td>
+                        <td class="table-input">
+                            <div id="form-watermark-transparency"></div>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+            <td><canvas id="form-watermark-canvas" class="watermark-canvas"> </canvas> </td>
+        </tr>
+    </table>
+
+</div>

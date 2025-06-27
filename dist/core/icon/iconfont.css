@@ -1,11 +1,11 @@
 @font-face {
   font-family: "layui-icon"; /* Project id 4836166 */
-  src: url('iconfont.eot?t=1743409029077'); /* IE9 */
-  src: url('iconfont.eot?t=1743409029077#iefix') format('embedded-opentype'), /* IE6-IE8 */
-       url('iconfont.woff2?t=1743409029077') format('woff2'),
-       url('iconfont.woff?t=1743409029077') format('woff'),
-       url('iconfont.ttf?t=1743409029077') format('truetype'),
-       url('iconfont.svg?t=1743409029077#layui-icon') format('svg');
+  src: url('iconfont.eot?t=1750238812417'); /* IE9 */
+  src: url('iconfont.eot?t=1750238812417#iefix') format('embedded-opentype'), /* IE6-IE8 */
+       url('iconfont.woff2?t=1750238812417') format('woff2'),
+       url('iconfont.woff?t=1750238812417') format('woff'),
+       url('iconfont.ttf?t=1750238812417') format('truetype'),
+       url('iconfont.svg?t=1750238812417#layui-icon') format('svg');
 }
 
 .layui-icon {
@@ -14,6 +14,50 @@
   font-style: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.layui-icon-pass:before {
+  content: "\e647";
+}
+
+.layui-icon-cancel:before {
+  content: "\e648";
+}
+
+.layui-icon-commit:before {
+  content: "\e646";
+}
+
+.layui-icon-history:before {
+  content: "\e61d";
+}
+
+.layui-icon-comments:before {
+  content: "\eb70";
+}
+
+.layui-icon-show:before {
+  content: "\e617";
+}
+
+.layui-icon-hide:before {
+  content: "\e614";
+}
+
+.layui-icon-next-m:before {
+  content: "\ecb5";
+}
+
+.layui-icon-prev-m:before {
+  content: "\e610";
+}
+
+.layui-icon-next-y:before {
+  content: "\ecb4";
+}
+
+.layui-icon-prev-y:before {
+  content: "\e60c";
 }
 
 .layui-icon-header:before {
