@@ -1,11 +1,11 @@
 @font-face {
   font-family: "layui-icon"; /* Project id 4836166 */
-  src: url('iconfont.eot?t=1750238812417'); /* IE9 */
-  src: url('iconfont.eot?t=1750238812417#iefix') format('embedded-opentype'), /* IE6-IE8 */
-       url('iconfont.woff2?t=1750238812417') format('woff2'),
-       url('iconfont.woff?t=1750238812417') format('woff'),
-       url('iconfont.ttf?t=1750238812417') format('truetype'),
-       url('iconfont.svg?t=1750238812417#layui-icon') format('svg');
+  src: url('iconfont.eot?t=1751447823552'); /* IE9 */
+  src: url('iconfont.eot?t=1751447823552#iefix') format('embedded-opentype'), /* IE6-IE8 */
+       url('iconfont.woff2?t=1751447823552') format('woff2'),
+       url('iconfont.woff?t=1751447823552') format('woff'),
+       url('iconfont.ttf?t=1751447823552') format('truetype'),
+       url('iconfont.svg?t=1751447823552#layui-icon') format('svg');
 }
 
 .layui-icon {
@@ -14,6 +14,14 @@
   font-style: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.layui-icon-loading-1:before {
+  content: "\e6e1";
+}
+
+.layui-icon-database:before {
+  content: "\e6ad";
 }
 
 .layui-icon-pass:before {

@@ -18,6 +18,7 @@
         //     s.parentNode.insertBefore(hm, s);
         // })();
     </script>
+    <script src="./core/jquery.min.js"></script>
     <style>
         html,
         body {
@@ -26,6 +27,8 @@
             width: 100%;
             height: 100%;
         }
+
+
 
         body {
             display: flex;
@@ -86,9 +89,8 @@
 
 <body>
     <div class="header">
-        <div>Peach Editor编辑器集成示例，讨论QQ群：860730604，预览以及打印需下载安装<a
-                href="https://peach-down.netlify.app/peach-printer-setup.exe">打印组件</a></div>
-        <div class="progress-desc">更新日期： 2025年6月18日，添加审阅批注功能</div>
+        <div>Peach Editor编辑器集成示例，讨论QQ群：860730604</a></div>
+        <div class="progress-desc">更新日期： 2025年6月27日，添加修订修改功能，待完善</div>
     </div>
     <div class="content">
         <div class="btn-panel">
@@ -99,7 +101,9 @@
             <button class="btn" id="read-botton">只读模式</button>
             <button class="btn" id="view-botton">查看模式</button>
 
+            <button class="btn" id="create-botton">新建文档</button>
             <button class="btn" id="save-botton">保存文档</button>
+            <button class="btn" id="param-botton">文档段落</button>
         </div>
         <div class="frm-panel">
             <iframe src="./core/editor.html" frameborder="0" class="edt-container" id="edit-frame"></iframe>
@@ -116,6 +120,8 @@
         var viewBto = document.getElementById("view-botton")
         var saveBto = document.getElementById("save-botton")
         var reviBto = document.getElementById("revi-botton")
+        var createBto = document.getElementById("create-botton")
+        var paramBto = document.getElementById("param-botton")
 
 
         var editframe = document.getElementById("edit-frame")
@@ -138,16 +144,32 @@
             loadDoc("6", "data/example2.pxd")
         })
 
+        paramBto.addEventListener("click", function () {
+            alert(JSON.stringify(editframe.contentWindow.EditorDocs.getStructure()))
+        })
+
+
+        createBto.addEventListener("click", function () {
+            createDoc("9")
+        })
+
         const config = {
             license: "",
+            licensee: "",
+            loglevel: 1,//debug
             username: '张三丰',
             useraccount: '001',
+            headerDivider: false,
+            footerDivider: false,
             saveAction: function (docdata) {
                 console.info(docdata)
                 alert("此处调用保存方法")
             },
-            commitAction: function (docdata) {
-                alert("此处调用提交版本方法")
+            commitVersionAction: function (docdata, user, remarks) {
+                alert("此处提交版本回调函数")
+            },
+            commitRevisionAction: function (docdata, user, remarks) {
+                alert("此处提交修订回调函数")
             },
             deleteCommentsAction: function (docUser, comnentsUser) {
                 //删除批注判断方法,
@@ -182,6 +204,16 @@
                     code: '01',
                     text: '工人'
                 },
+                duoxuan: [
+                    {
+                        code: '1',
+                        text: '选项一'
+                    },
+                    {
+                        code: '2',
+                        text: '选项二'
+                    }
+                ],
             }
             editframe.src = editframe.src;
             editframe.onload = function () {

@@ -6,6 +6,20 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "42738969",
+      "name": "加载中",
+      "font_class": "loading-1",
+      "unicode": "e6e1",
+      "unicode_decimal": 59105
+    },
+    {
+      "icon_id": "1789130",
+      "name": "数据集",
+      "font_class": "database",
+      "unicode": "e6ad",
+      "unicode_decimal": 59053
+    },
+    {
       "icon_id": "11493908",
       "name": "通过",
       "font_class": "pass",

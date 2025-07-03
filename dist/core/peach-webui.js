@@ -7,15 +7,23 @@ function create(conf) {
 function load(conf, doc) {
     layui.use(function () {
         EditorDocs.create(WebUIControl, conf);
-        EditorDocs.loadDocument(doc);
+        if (EditorDocs.stringTool("isNotBlank", doc)) {
+            EditorDocs.loadDocument(doc);
+        } else {
+            EditorDocs.newDocument(conf);
+        }
     });
 }
 
 function loadTemplet(conf, doc, data) {
     layui.use(function () {
         EditorDocs.create(WebUIControl, conf);
-        EditorDocs.loadDocument(doc);
-        EditorDocs.initDocument(data);
+        if (EditorDocs.stringTool("isNotBlank", doc)) {
+            EditorDocs.loadDocument(doc);
+            EditorDocs.initDocument(data);
+        } else {
+            EditorDocs.newDocument(conf);
+        }
     });
 }
 
@@ -41,7 +49,9 @@ WebUIControl = {
             selected: false,
             groups: [{ type: "group", btns: [] }]
         }
-        fileJosn.groups[0].btns.push(Object.assign({}, baseBtn, { id: 'doc-import', title: '导入', icon: 'layui-icon-import', }))
+        if (EditorDocs.isDesignModal()) {
+            fileJosn.groups[0].btns.push(Object.assign({}, baseBtn, { id: 'doc-import', title: '导入', icon: 'layui-icon-import', }))
+        }
         if (EditorDocs.isPrintModal()) {
             fileJosn.groups[0].btns.push(Object.assign({}, baseBtn, { id: 'doc-save', title: '保存', icon: 'layui-icon-save', }))
             fileJosn.groups[0].btns.push(Object.assign({}, baseBtn, { id: 'doc-download', title: '下载', icon: 'layui-icon-download', }))
@@ -51,7 +61,7 @@ WebUIControl = {
             fileJosn.groups[0].btns.push(Object.assign({}, baseBtn, { id: 'doc-exp-pdf', title: '导出为PDF', icon: 'layui-icon-export-pdf', }))
         }
         menuJson.tabs.push(fileJosn)
-        if (EditorDocs.isModifyModal()) {
+        if (EditorDocs.isEditModal()) {
             const editJosn = {
                 title: '编辑',
                 selected: false,
@@ -100,7 +110,7 @@ WebUIControl = {
                 ]
             }
             insertJosn.groups[0].btns.push(Object.assign({}, baseBtn, { id: 'insert-table', title: '表格', icon: 'layui-icon-table', isFont18: true, isDownMenu: true }))
-            insertJosn.groups[0].btns.push(Object.assign({}, baseBtn, { id: 'insert-image', title: '图片', icon: 'layui-icon-picture', isFont18: true, isDownMenu: true }))
+            insertJosn.groups[0].btns.push(Object.assign({}, baseBtn, { id: 'insert-image', title: '图片', icon: 'layui-icon-picture', isFont18: true, isDownMenu: false }))
             insertJosn.groups[0].btns.push(Object.assign({}, baseBtn, { id: 'insert-shape', title: '形状', icon: 'layui-icon-shape', isFont18: true, isDownMenu: true }))
             insertJosn.groups[0].btns.push(Object.assign({}, baseBtn, { id: 'insert-symbol', title: '特殊符号', icon: 'layui-icon-omega', isFont18: true, isDownMenu: true }))
             insertJosn.groups[0].btns.push(Object.assign({}, baseBtn, { id: 'insert-medicine', title: '医学表达式', icon: 'layui-icon-medicine', isFont18: true, isDownMenu: true }))
@@ -133,21 +143,33 @@ WebUIControl = {
         }
 
 
-        if (EditorDocs.isModifyModal() || EditorDocs.isReviewModal()) {
+        if (EditorDocs.isEditModal() || EditorDocs.isNoteModal() || EditorDocs.isModifyModal()) {
             const reviewJosn = {
                 title: '审阅',
                 selected: false,
                 groups: [
                     { type: "group", btns: [] },
                     { type: "group", btns: [] },
+                    { type: "group", btns: [] },
                 ]
             }
-            if (EditorDocs.isModifyModal()) {
+            if (EditorDocs.isEditModal()) {
                 reviewJosn.groups[0].btns.push(Object.assign({}, baseBtn, { id: 'review-show-comments', title: '批注视图', icon: 'layui-icon-comments', isFont18: true, isDownMenu: true }))
+                reviewJosn.groups[1].btns.push(Object.assign({}, baseBtn, { id: 'review-version-commit', title: '提交版本', icon: 'layui-icon-commit', isFont18: true, }))
+                reviewJosn.groups[1].btns.push(Object.assign({}, baseBtn, { id: 'review-version-history', title: '历史版本', icon: 'layui-icon-history', isFont18: true, }))
             }
-            reviewJosn.groups[0].btns.push(Object.assign({}, baseBtn, { id: 'review-insert-comments', title: '新建批注', icon: 'layui-icon-comments', isFont18: true }))
-            //reviewJosn.groups[1].btns.push(Object.assign({}, baseBtn, { id: 'review-commit', title: '提交版本', icon: 'layui-icon-commit', isFont18: true, }))
-            //reviewJosn.groups[1].btns.push(Object.assign({}, baseBtn, { id: 'review-history', title: '历史版本', icon: 'layui-icon-history', isFont18: true, }))
+            if (EditorDocs.isNoteModal()) {
+                reviewJosn.groups[0].btns.push(Object.assign({}, baseBtn, { id: 'review-insert-comments', title: '新建批注', icon: 'layui-icon-comments', isFont18: true }))
+            }
+            if (EditorDocs.isModifyModal()) {
+                reviewJosn.groups[1].btns.push(Object.assign({}, baseBtn, { id: 'review-commit-revision', title: '提交修订', icon: 'layui-icon-commit', isFont18: true, }))
+            }
+            if (EditorDocs.isEditModal()) {
+                reviewJosn.groups[2].btns.push(Object.assign({}, baseBtn, { id: 'review-accept', title: '接受修订', icon: 'layui-icon-pass', isFont18: true, }))
+                reviewJosn.groups[2].btns.push(Object.assign({}, baseBtn, { id: 'review-refuse', title: '拒绝修订', icon: 'layui-icon-cancel', isFont18: true, }))
+                reviewJosn.groups[2].btns.push(Object.assign({}, baseBtn, { id: 'review-next', title: '下一处', icon: 'layui-icon-down', isFont18: true, }))
+                reviewJosn.groups[2].btns.push(Object.assign({}, baseBtn, { id: 'review-pre', title: '上一处', icon: 'layui-icon-up', isFont18: true, }))
+            }
             menuJson.tabs.push(reviewJosn)
             selectIndex = 1
         }
@@ -159,7 +181,7 @@ WebUIControl = {
                 { type: "group", btns: [] },
             ]
         }
-        helpJosn.groups[0].btns.push(Object.assign({}, baseBtn, { id: 'system-printer', title: '下载打印控件', icon: 'layui-icon-printer', }))
+        //helpJosn.groups[0].btns.push(Object.assign({}, baseBtn, { id: 'system-printer', title: '下载打印控件', icon: 'layui-icon-printer', }))
         helpJosn.groups[0].btns.push(Object.assign({}, baseBtn, { id: 'system-about', title: '关于', icon: 'layui-icon-about', }))
         menuJson.tabs.push(helpJosn)
         menuJson.tabs[selectIndex].selected = true
@@ -208,9 +230,10 @@ WebUIControl = {
             layui.datepick.render({
                 elem: '#editor-canvas',
                 id: '#editor-canvas-1',
+                value: new Date(opt.property.value),
                 clickEvent: (value) => {
                     EditorDocs.changeDatePickerValue(opt.id, value.getTime())
-                    layui.dropdown.close('#editor-canvas');
+                    layui.dropdown.close('#editor-canvas-1');
                 }
             })
             layui.dropdown.open('#editor-canvas-1');
@@ -237,6 +260,7 @@ WebUIControl = {
                 data: info.property.options,
                 source: info.property.datasource,
                 filter: info.property.filter,
+                rows: info.property.rows,
                 selectEvent: (value) => {
                     EditorDocs.changeSingleFieldValue(opt.id, value)
                     layui.dropdown.close('#editor-canvas-6');
@@ -251,6 +275,7 @@ WebUIControl = {
                 data: info.property.options,
                 source: info.property.datasource,
                 filter: info.property.filter,
+                rows: info.property.rows,
                 saveEvent: (value) => {
                     EditorDocs.changeMultipleFieldValue(opt.id, value)
                     layui.dropdown.close('#editor-canvas-7');
@@ -334,11 +359,11 @@ WebUIControl = {
             elem: '#editor-canvas',
             id: 'editor-contextmenu',
             data: menuData,
-            clickEvent: (data) => {
+            clickEvent: (data, othis, event) => {
                 if (data.id == '01') {
-                    EditorDocs.copyText()
+                    EditorDocs.copyText(event, true)
                 } else if (data.id == '02') {
-                    EditorDocs.pasteText()
+                    EditorDocs.pasteText(event, true)
                 } else if (data.id == '03') {
                     this.openParagraphForm()
                 } else if (data.id == '05') {
@@ -404,14 +429,24 @@ WebUIControl = {
         })
         layui.dropdown.open('editor-contextmenu');
     },
-    showMessage: function (msg) {
-        layer.alert(msg, {
-            skin: 'layui-layer-win10', // 2.8+
-            shade: 0.01,
-            btn: ['确定']
-        })
+    showMessage: function (type, msg, callback) {
+        if (type == 1) {
+            layui.layer.alert(msg, {
+                skin: 'layui-layer-win10', // 2.8+
+                shadeClose: true,
+            }, (index) => {
+                layui.layer.close(index);
+                callback()
+            });
+        }
     },
-    showMask: function (visible) { },
+    showMask: function (visible, index) {
+        if (visible) {
+            return layui.layer.load(1, { shade: 0.5 });
+        } else {
+            layui.layer.close(index);
+        }
+    },
     createFileMenu: function () {
         const $ = layui.$
         layui.linkButton.render({
@@ -785,6 +820,8 @@ WebUIControl = {
                         right: data.margins.leftRight,
                         top: data.margins.topBottom,
                         bottom: data.margins.topBottom,
+                        headerTop: data.margins.headerFooter,
+                        footerBottom: data.margins.headerFooter,
                     })
                     WebUIControl.triggerPaperInfo()
                 } else {
@@ -898,20 +935,66 @@ WebUIControl = {
     createCommentsMenu: function () {
         layui.menuButton.render({
             elem: "#review-show-comments",
+            id: 'show-comments',
             data: [
                 { title: '显示未处理', icon: '', value: '2', },
                 { title: '显示已处理', icon: '', value: '3', },
             ],
-            clickEvent: (data) => {
+            clickEvent: function (data) {
                 EditorDocs.changeCommentsView(data.value)
-            },
+                layui.menuButton.selected('show-comments', data.value)
+            }
         })
+
+        layui.linkButton.render({
+            elem: '#review-version-commit',
+            clickEvent: () => {
+                if (EditorDocs.verifiCommitVersion()) {
+                    this.openCommitVersionDialog()
+                }
+            }
+        });
+
+
         layui.linkButton.render({
             elem: '#review-insert-comments',
             clickEvent: () => {
                 this.openCommentsDialog()
             }
         });
+        layui.linkButton.render({
+            elem: '#review-commit-revision',
+            clickEvent: () => {
+                this.openCommitRevisionDialog()
+            }
+        });
+        layui.linkButton.render({
+            elem: '#review-accept',
+            clickEvent: () => {
+                EditorDocs.acceptRevision()
+            }
+        });
+        layui.linkButton.render({
+            elem: '#review-refuse',
+            clickEvent: () => {
+                EditorDocs.refuseRevision()
+            }
+        });
+        layui.linkButton.render({
+            elem: '#review-pre',
+            clickEvent: () => {
+                EditorDocs.previousRevision()
+            }
+        });
+        layui.linkButton.render({
+            elem: '#review-next',
+            clickEvent: () => {
+                EditorDocs.nextRevision()
+            }
+        });
+
+
+        layui.menuButton.selected('show-comments', 2)
 
     },
     createHelpMenu: function () {
@@ -1336,7 +1419,7 @@ WebUIControl = {
         $.get("./form/document/outlineForm.html", function (data) {
             layui.layer.open({
                 type: 1,
-                title: '文档结构',
+                title: '文档结构化数据',
                 skin: 'layui-layer-win10', // 2.8+
                 area: ['610px', '350px'],
                 btn: ['导出', '关闭'],
@@ -1367,7 +1450,26 @@ WebUIControl = {
                 // // 关闭 prompt
                 EditorDocs.insertComments(value);
                 layer.close(index);
-            });
+            }
+        );
+    },
+    openCommitRevisionDialog: function () {
+        layui.layer.prompt(
+            { title: '确定提交修订信息？', formType: 2, skin: 'layui-layer-win10 layui-layer-prompt', placeholder: '修订备注' },
+            function (value, index, elem) {
+                EditorDocs.commitRevision(value);
+                layer.close(index);
+            }
+        );
+    },
+    openCommitVersionDialog: function () {
+        layui.layer.prompt(
+            { title: '确定提交版本？', formType: 2, skin: 'layui-layer-win10 layui-layer-prompt', placeholder: '版本备注' },
+            function (value, index, elem) {
+                EditorDocs.commitVersion(value);
+                layer.close(index);
+            }
+        );
     },
     openColorDialog: function () {
         const $ = layui.$
@@ -1671,7 +1773,6 @@ WebUIControl = {
         const table = layui.table
         $.get("./form/component/datepickerComponent.html", function (data) {
             const info = EditorDocs.getCompInfo(compID)
-            const id = '#form-datapicker-identifier'
             const formatlist = EditorDocs.getDataPatternList().map(label => {
                 return {
                     label: label,
@@ -1716,7 +1817,6 @@ WebUIControl = {
         const $ = layui.$
         $.get("./form/component/textboxComponent.html", function (data) {
             const info = EditorDocs.getCompInfo(compID)
-            const id = '#form-textbox-identifier'
             layui.layer.open({
                 type: 1,
                 title: '文本框组件属性编辑',
@@ -1743,6 +1843,10 @@ WebUIControl = {
                     layui.tools.renderCheck("#form-textbox-required", info.property.required, (val) => {
                         info.property.required = val
                     })
+                    layui.tools.renderCheck("#form-textbox-border", info.property.border, (val) => {
+                        info.property.border = val
+                    })
+
                 },
                 yes: function (index, layero, that) {
                     EditorDocs.changeCompInfo(info)
@@ -1758,7 +1862,6 @@ WebUIControl = {
         const $ = layui.$
         $.get("./form/component/textFieldComponent.html", function (data) {
             const info = EditorDocs.getCompInfo(compID)
-            const id = '#form-textfield-identifier'
             layui.layer.open({
                 type: 1,
                 title: '数据文本域组件属性编辑',
@@ -1799,7 +1902,6 @@ WebUIControl = {
     openCheckBoxCompForm: function (compID) {
         const $ = layui.$
         $.get("./form/component/checkboxComponent.html", function (data) {
-            const id = '#form-checkbox-identifier'
             const info = EditorDocs.getCompInfo(compID)
             layui.layer.open({
                 type: 1,
@@ -1839,7 +1941,6 @@ WebUIControl = {
         const $ = layui.$
         $.get("./form/component/radiogroupComponent.html", function (data) {
             const info = EditorDocs.getCompInfo(compID)
-            const idfid = '#form-radiobox-identifier'
             const optid = '#form-radiobox-options'
             layui.layer.open({
                 type: 1,
@@ -1887,7 +1988,6 @@ WebUIControl = {
         const $ = layui.$
         $.get("./form/component/singleFieldComponent.html", function (data) {
             const info = EditorDocs.getCompInfo(compID)
-            const idfid = "#form-singlefield-identifier"
             const optid = '#form-singlefield-options'
             layui.layer.open({
                 type: 1,
@@ -1921,6 +2021,9 @@ WebUIControl = {
                     layui.tools.renderText("#form-singlefield-label", info.property.placeholder, { placeholder: '多选框标签' }, (val) => {
                         info.property.placeholder = val
                     })
+                    layui.tools.renderNumber("#form-singlefield-rows", info.property.rows, { min: 1, max: 10 }, (val) => {
+                        info.property.rows = val
+                    })
                     layui.tools.renderText("#form-singlefield-datasource", info.property.datasource, { placeholder: '远程数据源' }, (val) => {
                         info.property.datasource = val
                     })
@@ -1944,7 +2047,6 @@ WebUIControl = {
         const $ = layui.$
         $.get("./form/component/multipleFieldComponent.html", function (data) {
             const info = EditorDocs.getCompInfo(compID)
-            const idfid = "#form-multiplefield-identifier"
             const optid = '#form-multiplefield-options'
             layui.layer.open({
                 type: 1,
