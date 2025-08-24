@@ -31,5 +31,5 @@ Peach-Editor，Web 版电子病历编辑器。其用户界面秉持简洁直观�
 
 <a target="_blank" href="https://qm.qq.com/cgi-bin/qm/qr?k=TNhMKefrAqGTiJ7yddn136i7pZ8onVEm&jump_from=webapi&authKey=8FmOK3p3qpfsw/79ZsLoxT/aHDC4krVZSwWEh4chdQLlkL1r4fl2tdwTA1FtpcI6"><img border="0" src="//pub.idqqimg.com/wpa/images/group.png" alt="Peach-Editor电子病历交流" title="Peach-Editor电子病历交流"></a>
 
-[发布网址](https://emr.jpeach.xyz/)
+[发布网址](https://emr.jpeach.cn/)
 [在线编辑器](https://peach-editor.netlify.app/)
