@@ -9,16 +9,6 @@
     <meta name="Keywords" content="BS电子病例编辑器,电子病例编辑器,EMR编辑器" />
     <meta name="Description" content="Peach-Editor是一款优秀的Web版电子病例编辑器解决方案，支持文本编辑、表格、分页、水印等，兼容主流浏览器及IE。" />
     <link rel="shortcut icon" href="logo.png">
-    <script>
-        // var _hmt = _hmt || [];
-        // (function () {
-        //     var hm = document.createElement("script");
-        //     hm.src = "https://hm.baidu.com/hm.js?31ee8e44998fd4da14b8bc2fe38d14b1";
-        //     var s = document.getElementsByTagName("script")[0];
-        //     s.parentNode.insertBefore(hm, s);
-        // })();
-    </script>
-    <script src="./core/jquery.min.js"></script>
     <style>
         html,
         body {
@@ -26,6 +16,7 @@
             margin: 0;
             width: 100%;
             height: 100%;
+            font-family: simsun;
         }
 
 
@@ -58,7 +49,7 @@
 
         .btn-panel {
             flex: 0 0 auto;
-            width: 100px;
+            width: 128px;
             text-align: center;
             border-right: 1px solid #979797;
         }
@@ -67,11 +58,13 @@
             margin: 3px 0;
             height: 40px;
             min-width: 90px;
+            font-family: simsun;
 
         }
 
         .frm-panel {
-            flex: 1 1 auto;
+            flex: 0 0 auto;
+            width: 1180px;
         }
 
         .edt-container {
@@ -84,16 +77,25 @@
         .progress-desc {
             color: #979797;
         }
+
+        .title {
+            font-weight: 700;
+        }
+
+        .desc-panel {
+            flex: 1 1 auto;
+        }
     </style>
 </head>
 
 <body>
-    <div class="header">
-        <div>Peach Editor编辑器集成示例，讨论QQ群：860730604</a></div>
-        <div class="progress-desc">更新日期： 2025年6月27日，添加修订修改功能，待完善</div>
-    </div>
     <div class="content">
         <div class="btn-panel">
+            <div class="title">
+                <h1>Peach
+                    Editor
+                </h1>
+            </div>
             <button class="btn" id="word-botton">Word模式</button>
             <button class="btn" id="desn-botton">设计模式</button>
             <button class="btn" id="edit-botton">编辑模式</button>
@@ -106,13 +108,14 @@
             <button class="btn" id="param-botton">文档段落</button>
         </div>
         <div class="frm-panel">
-            <iframe src="./core/editor.html" frameborder="0" class="edt-container" id="edit-frame"></iframe>
+            <iframe src="./core/editor.html" frameborder="0" class="edt-container" id="edit-frame1"></iframe>
+        </div>
+        <div class="desc-panel">
+
         </div>
     </div>
     <script>
-        window.onload = function () {
-            loadDoc("9", "data/example1.pxd")
-        };
+        var editframe1 = document.getElementById("edit-frame1")
         var wordBto = document.getElementById("word-botton")
         var desnBto = document.getElementById("desn-botton")
         var editBto = document.getElementById("edit-botton")
@@ -122,30 +125,33 @@
         var reviBto = document.getElementById("revi-botton")
         var createBto = document.getElementById("create-botton")
         var paramBto = document.getElementById("param-botton")
+        var tprcharBto = document.getElementById("TPRchart-botton")
 
+        editframe1.onload = function () {
+            loadDoc("9", "data/example1.emr")
+        };
 
-        var editframe = document.getElementById("edit-frame")
         wordBto.addEventListener("click", function () {
-            loadDoc("9", "data/example1.pxd")
+            loadDoc("9", "data/example1.emr")
         })
         desnBto.addEventListener("click", function () {
-            loadDoc("8", "data/example1.pxd")
+            loadDoc("8", "data/example1.emr")
         })
         editBto.addEventListener("click", function () {
-            loadInit("7", "data/example2.pxd")
+            loadInit("7", "data/example2.emr")
         })
         readBto.addEventListener("click", function () {
-            loadDoc("2", "data/example2.pxd")
+            loadDoc("2", "data/example2.emr")
         })
         viewBto.addEventListener("click", function () {
-            loadDoc("1", "data/example2.pxd")
+            loadDoc("1", "data/example2.emr")
         })
         reviBto.addEventListener("click", function () {
-            loadDoc("6", "data/example2.pxd")
+            loadDoc("6", "data/example2.emr")
         })
 
         paramBto.addEventListener("click", function () {
-            alert(JSON.stringify(editframe.contentWindow.EditorDocs.getStructure()))
+            alert(JSON.stringify(editframe1.contentWindow.EditorDocs.getStructure()))
         })
 
 
@@ -154,13 +160,20 @@
         })
 
         const config = {
-            license: "",
-            licensee: "",
-            loglevel: 1,//debug
-            username: '张三丰',
-            useraccount: '001',
-            headerDivider: false,
-            footerDivider: false,
+            license: "",//注册码
+            licensee: "",//注册名
+            loglevel: 1,//debug等级
+            username: '张三丰',//操作员姓名
+            useraccount: '001',//操作员工号
+            name: '文件名称',//文档名称
+            headerDivider: false,//页眉和内容之间是否插入横线
+            footerDivider: false,//页脚和内容之间是否插入横线
+            exportQuality: 0.5,//导出图片、pdf等的清晰度质量(0-1),默认0.5
+            signaturePath: "../data/signature.png",//签名获取url地址
+            multTextBDColor: '#2284FE',//多行文本域边框颜色
+            multTextBDWidth: '5',//多行文本域边框宽度（单位像素）
+            multTextBDHeight: '1',//多行文本域边框高度（字号的倍数可以带小数）
+            compTextBGColor: '#e2e7ec',//组件文本背景颜色
             saveAction: function (docdata) {
                 console.info(docdata)
                 alert("此处调用保存方法")
@@ -182,13 +195,11 @@
 
 
         function createDoc(modal) {
-            editframe.src = editframe.src;
-            editframe.onload = function () {
-                this.contentWindow.create(Object.assign({}, config, { modal: modal, name: '新建文档' }))
-            }
+            this.editframe1.contentWindow.EditorWebs.create(Object.assign({}, config, { modal: modal }))
         }
 
         function loadInit(modal, file) {
+            editframe1.style.display = "block"
             var source = {
                 yljg: 'XXX县人民医院',
                 zzjgbm: '1111111111111111111111111111',
@@ -215,41 +226,33 @@
                     }
                 ],
             }
-            editframe.src = editframe.src;
-            editframe.onload = function () {
-                fetch(file).then(response => {
-                    if (!response.ok) {
-                        throw new Error(`HTTP error! status: ${response.status}`);
-                    }
-                    return response.text()
-                }).then(data => {
-                    this.contentWindow.loadTemplet(Object.assign({}, config, { modal: modal }), data, source)
-                }).catch(error => {
-                    console.error('请求失败：', error);
-                });
-            }
+            fetch(file).then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return response.text()
+            }).then(data => {
+                editframe1.contentWindow.EditorWebs.loadTemplet(Object.assign({}, config, { modal: modal }), data, source)
+            }).catch(error => {
+                console.error('请求失败：', error);
+            });
         }
 
         function loadDoc(modal, file) {
-            editframe.src = editframe.src;
-            editframe.onload = function () {
-                fetch(file).then(response => {
-                    if (!response.ok) {
-                        throw new Error(`HTTP error! status: ${response.status}`);
-                    }
-                    return response.text()
-                }).then(data => {
-
-                    this.contentWindow.load(Object.assign({}, config, { modal: modal }), data)
-
-                }).catch(error => {
-                    console.error('请求失败：', error);
-                });
-            }
+            fetch(file).then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return response.text()
+            }).then(data => {
+                editframe1.contentWindow.EditorWebs.load(Object.assign({}, config, { modal: modal }), data)
+            }).catch(error => {
+                console.error('请求失败：', error);
+            });
         }
 
         saveBto.addEventListener("click", () => {
-            editframe.contentWindow.EditorDocs.fileSave();
+            editframe1.contentWindow.EditorDocs.fileSave();
             /**
             //动态在当前光标处插入数据组件
             editframe.contentWindow.EditorDocs.insertDatePicker({
