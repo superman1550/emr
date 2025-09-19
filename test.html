@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>asd</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="./core/peach-editor.css">
+</head>
+
+<body>
+  sdasdasd
+  <div id="past">
+    sssssssssssssssssssssssss
+  </div>
+  <input type="text">
+  <button id="ss">ssss</button>
+</body>
+
+
+<script>
+  document.addEventListener('copy', (e) => {
+    e.preventDefault();
+    // 设置 HTML
+    try {
+      console.log('剪贴板数据设置成功');
+    } catch (err) {
+      console.error('剪贴板操作失败:', err);
+    }
+  });
+  document.addEventListener('paste', (e) => {
+    e.preventDefault();
+    const clipboardData = e.clipboardData || window.clipboardData;
+    // 遍历所有剪贴板项目
+    // 获取纯文本
+
+  });
+
+  document.getElementById("ss").addEventListener("click", async () => {
+    const requestClipboardPermission = () => {
+      try {
+        // 检查当前权限状态
+        const permissionStatus = navigator.permissions.query({
+          name: 'clipboard-write'
+        });
+
+        if (permissionStatus.state === 'granted' || permissionStatus.state === 'prompt') {
+          console.log('已获得剪贴板权限');
+          return true;
+        } else {
+          console.log('剪贴板权限被拒绝');
+          return false;
+        }
+      } catch (err) {
+        console.error('无法查询剪贴板权限:', err);
+        // 回退到传统方法
+        return false;
+      }
+    }
+    const hasPermission = await requestClipboardPermission();
+    if (hasPermission) {
+      await navigator.clipboard.writeText('已授权复制');
+    } else {
+      // 提示用户手动复制
+    }
+  })
+
+
+</script>
+
+</html>

@@ -1,0 +1,319 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Peach-Editor 编辑器</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="Keywords" content="BS电子病例编辑器,电子病例编辑器,EMR编辑器" />
+    <meta name="Description" content="Peach-Editor是一款优秀的Web版电子病例编辑器解决方案，支持文本编辑、表格、分页、水印等，兼容主流浏览器及IE。" />
+    <link rel="shortcut icon" href="logo.png">
+    <style>
+        html,
+        body {
+            padding: 0px;
+            margin: 0;
+            width: 100%;
+            height: 100%;
+            font-family: simsun;
+        }
+
+
+
+        body {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .header {
+            flex: 0 1 auto;
+            height: 40px;
+            line-height: 1rem;
+            font-size: 0.9rem;
+            padding: 2px 10px;
+            margin: 0;
+            box-sizing: border-box;
+            border-bottom: 1px solid #979797;
+        }
+
+        .content {
+            flex: 1 1 auto;
+            height: 0;
+            display: flex;
+            flex-direction: row;
+            padding: 0px;
+            margin: 0;
+            box-sizing: border-box;
+        }
+
+        .btn-panel {
+            flex: 0 0 auto;
+            width: 128px;
+            text-align: center;
+            border-right: 1px solid #979797;
+        }
+
+        .btn {
+            margin: 3px 0;
+            height: 40px;
+            min-width: 90px;
+            font-family: simsun;
+
+        }
+
+        .frm-panel {
+            flex: 0 0 auto;
+            width: 1180px;
+        }
+
+        .edt-container {
+            display: block;
+            width: 100%;
+            height: 100%;
+            box-sizing: border-box;
+        }
+
+        .progress-desc {
+            color: #979797;
+        }
+
+        .title {
+            font-weight: 700;
+        }
+
+        .desc-panel {
+            flex: 1 1 auto;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="content">
+        <div class="btn-panel">
+            <div class="title">
+                <h1>Peach
+                    Editor
+                </h1>
+            </div>
+            <button class="btn" id="word-botton">Word模式</button>
+            <button class="btn" id="desn-botton">设计模式</button>
+            <button class="btn" id="edit-botton">编辑模式</button>
+            <button class="btn" id="revi-botton">审阅模式</button>
+            <button class="btn" id="read-botton">只读模式</button>
+            <button class="btn" id="view-botton">查看模式</button>
+
+            <button class="btn" id="create-botton">新建文档</button>
+            <button class="btn" id="save-botton">保存文档</button>
+            <button class="btn" id="param-botton">文档段落</button>
+        </div>
+        <div class="frm-panel">
+            <iframe src="./core/editor.html" frameborder="0" class="edt-container" id="edit-frame1"></iframe>
+        </div>
+        <div class="desc-panel">
+
+        </div>
+    </div>
+    <script>
+        var editframe1 = document.getElementById("edit-frame1")
+        var wordBto = document.getElementById("word-botton")
+        var desnBto = document.getElementById("desn-botton")
+        var editBto = document.getElementById("edit-botton")
+        var readBto = document.getElementById("read-botton")
+        var viewBto = document.getElementById("view-botton")
+        var saveBto = document.getElementById("save-botton")
+        var reviBto = document.getElementById("revi-botton")
+        var createBto = document.getElementById("create-botton")
+        var paramBto = document.getElementById("param-botton")
+        var tprcharBto = document.getElementById("TPRchart-botton")
+
+        editframe1.onload = function () {
+            loadDoc("9", "data/example1.emr")
+        };
+
+        wordBto.addEventListener("click", function () {
+            loadDoc("9", "data/example1.emr")
+        })
+        desnBto.addEventListener("click", function () {
+            loadDoc("8", "data/example1.emr")
+        })
+        editBto.addEventListener("click", function () {
+            loadInit("7", "data/example2.emr")
+        })
+        readBto.addEventListener("click", function () {
+            loadDoc("2", "data/example2.emr")
+        })
+        viewBto.addEventListener("click", function () {
+            loadDoc("1", "data/example2.emr")
+        })
+        reviBto.addEventListener("click", function () {
+            loadDoc("6", "data/example2.emr")
+        })
+
+        paramBto.addEventListener("click", function () {
+            alert(JSON.stringify(editframe1.contentWindow.EditorDocs.getStructure()))
+        })
+
+
+        createBto.addEventListener("click", function () {
+            createDoc("9")
+        })
+
+        const config = {
+            license: "",//注册码
+            licensee: "",//注册名
+            loglevel: 1,//debug等级
+            username: '张三丰',//操作员姓名
+            useraccount: '001',//操作员工号
+            name: '文件名称',//文档名称
+            headerDivider: false,//页眉和内容之间是否插入横线
+            footerDivider: false,//页脚和内容之间是否插入横线
+            exportQuality: 0.5,//导出图片、pdf等的清晰度质量(0-1),默认0.5
+            signaturePath: "../data/signature.png",//签名获取url地址
+            multTextBDColor: '#2284FE',//多行文本域边框颜色
+            multTextBDWidth: '5',//多行文本域边框宽度（单位像素）
+            multTextBDHeight: '1',//多行文本域边框高度（字号的倍数可以带小数）
+            compTextBGColor: '#e2e7ec',//组件文本背景颜色
+            saveAction: function (docdata) {
+                console.info(docdata)
+                alert("此处调用保存方法")
+            },
+            commitVersionAction: function (docdata, user, remarks) {
+                alert("此处提交版本回调函数")
+            },
+            commitRevisionAction: function (docdata, user, remarks) {
+                alert("此处提交修订回调函数")
+            },
+            deleteCommentsAction: function (docUser, comnentsUser) {
+                //删除批注判断方法,
+                //docUser 文档作者
+                //comnentsUser 批注添加人
+                //返回true能删除 返回false不能删除
+                return true
+            },
+        }
+
+
+        function createDoc(modal) {
+            this.editframe1.contentWindow.EditorWebs.create(Object.assign({}, config, { modal: modal }))
+        }
+
+        function loadInit(modal, file) {
+            editframe1.style.display = "block"
+            var source = {
+                yljg: 'XXX县人民医院',
+                zzjgbm: '1111111111111111111111111111',
+                ylfffs: '自费支付',
+                jkkh: 'A10000001',
+                zycs: '2',
+                bah: '202401011',
+                brxm: '张三三',
+                brxb: '男',
+                brnl: '25岁',
+                brgj: '中国',
+                brzy: {
+                    code: '01',
+                    text: '工人'
+                },
+                duoxuan: [
+                    {
+                        code: '1',
+                        text: '选项一'
+                    },
+                    {
+                        code: '2',
+                        text: '选项二'
+                    }
+                ],
+            }
+            fetch(file).then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return response.text()
+            }).then(data => {
+                editframe1.contentWindow.EditorWebs.loadTemplet(Object.assign({}, config, { modal: modal }), data, source)
+            }).catch(error => {
+                console.error('请求失败：', error);
+            });
+        }
+
+        function loadDoc(modal, file) {
+            fetch(file).then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return response.text()
+            }).then(data => {
+                editframe1.contentWindow.EditorWebs.load(Object.assign({}, config, { modal: modal }), data)
+            }).catch(error => {
+                console.error('请求失败：', error);
+            });
+        }
+
+        saveBto.addEventListener("click", () => {
+            editframe1.contentWindow.EditorDocs.fileSave();
+            /**
+            //动态在当前光标处插入数据组件
+            editframe.contentWindow.EditorDocs.insertDatePicker({
+                deletable: true,//可删除
+                required: false,//必填
+                code: '',//编码
+                format: "yyyy年MM月dd日",//日期格式
+            });
+            editframe.contentWindow.EditorDocs.insertTextBox({
+                deletable: true,//可删除
+                required: false,//必填
+                code: '',//编码
+            });
+            editframe.contentWindow.EditorDocs.insertCheckbox({
+                deletable: true,//可删除
+                required: false,//必填
+                code: '',//编码
+                label: "多选框",//多选框文本
+                value: "0",//0未选中1选中
+            });
+            editframe.contentWindow.EditorDocs.insertRadioGroup({
+                deletable: true,//可删除
+                required: false,//必填
+                code: '',//编码
+                options: [
+                        {code:'01',text:'选项一'},
+                        {code:'02',text:'选项二'},
+                        {code:'03',text:'选项三'},
+                        ], 
+                value: "01",//单选值
+            });
+            editframe.contentWindow.EditorDocs.insertTextField({
+                deletable: true,//可删除
+                required: false,//必填
+                code: '',//编码 
+                placeholder: "文本域", //值为空时的默认显示
+                value: "",//值
+            });
+            editframe.contentWindow.EditorDocs.insertSingleField({
+                deletable: true,//可删除
+                required: false,//必填
+                code: '',//编码 
+                placeholder: "单选选择域", //值为空时的默认显示
+                options:[{code:'01',text:'选项一'},
+                        {code:'02',text:'选项二'},
+                        {code:'03',text:'选项三'},],//下拉列表选项
+                value:{},
+            });
+            editframe.contentWindow.EditorDocs.insertMultipleField({
+                deletable: true,//可删除
+                required: false,//必填
+                code: '',//编码 
+                placeholder: "多选选择域", //值为空时的默认显示
+                options:[{code:'01',text:'选项一'},
+                        {code:'02',text:'选项二'},
+                        {code:'03',text:'选项三'},],//下拉列表选项
+                value:[],
+            });
+            **/
+        })
+    </script>
+</body>
+
+</html>
