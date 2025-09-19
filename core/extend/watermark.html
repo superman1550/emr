@@ -1,0 +1,181 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Peach-Editor 编辑器</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="jquery.min.js"></script>
+    <style>
+        .editor-form .input-text,
+        .editor-form .input-select,
+        .editor-form .input-number {
+            min-width: 100px;
+            height: 26px;
+            line-height: 26px;
+            border: 1px solid #adadad;
+            box-sizing: border-box;
+        }
+
+        .editor-form .input-textarea {
+            min-width: 100px;
+            height: 50px;
+            resize: none;
+        }
+
+        .editor-form .input-number {
+            padding: 0 4px;
+            text-align: right;
+        }
+
+        .editor-form .input-text {
+            padding: 0 4px;
+        }
+
+        .editor-form .input-button {
+            padding: 2px 4px;
+            margin-right: 4px;
+        }
+
+        .editor-form .input-suffix {
+            line-height: 26px;
+        }
+
+        .editor-form .input-label {
+            line-height: 26px;
+            min-width: 50px;
+            text-align: right;
+            display: block;
+        }
+
+        .editor-form .input-radio {
+            margin: 0;
+        }
+
+        .editor-form .input-check {
+            margin: 0;
+            margin-left: 4px;
+        }
+
+        .editor-form .layout-table {
+            margin: 10px;
+        }
+
+        .editor-form .table-label {
+            width: 70px;
+            text-align: right;
+        }
+
+
+        .editor-form .table-input {
+            min-width: 80px;
+        }
+
+
+        .editor-form .layout-table .table-title {
+            padding-left: 10px;
+            font-size: 1em;
+            color: #686868;
+            line-height: 1.5em;
+            border-bottom: 1px solid #dadada;
+        }
+
+        .editor-form .layout-table .table-label,
+        .editor-form .layout-table .table-input {
+            padding: 8px 4px;
+        }
+
+        .editor-form .layout-table .input-text,
+        .editor-form .layout-table .input-select,
+        .editor-form .layout-table .input-number {
+            width: 100%;
+        }
+
+
+        .editor-form .watermark-canvas {
+            width: 120px;
+            height: 180px;
+            border: 1px solid #8b8b8b;
+            margin: 0 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="editor-form">
+        <table>
+            <tr>
+                <td>
+                    <table class="layout-table">
+                        <tr>
+                            <td class="table-label">内容:</td>
+                            <td class="table-input"> <input id="form-watermark-text" class="input-text"> </input> </td>
+                        </tr>
+                        <tr>
+                            <td class="table-label"> 字体: </td>
+                            <td class="table-input"> <select id="form-watermark-family" class="input-select"> </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="table-label"> 字号: </td>
+                            <td class="table-input"> <select id="form-watermark-size" class="input-select"> </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="table-label"> 版式: </td>
+                            <td>
+                                <div>
+                                    <input type="radio" class="input-radio" id="form-watermark-style-0"
+                                        name="form-watermark-style" value="0">
+                                    <label for="form-watermark-style-0">水平</label>
+                                    <input type="radio" class="input-radio" id="form-watermark-style-1"
+                                        name="form-watermark-style" value="1">
+                                    <label for="form-watermark-style-1">倾斜</label>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="table-label"> 透明度: </td>
+                            <td class="table-input">
+                                <div id="form-watermark-transparency"></div>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+                <td><canvas id="form-watermark-canvas" class="watermark-canvas"> </canvas> </td>
+            </tr>
+        </table>
+
+    </div>
+    <script>
+        let componentInfo = {}
+        function render(baseInfo, newinfo) {
+            componentInfo = Object.assign(baseInfo, newinfo);
+            "123456".split("").forEach(c => {
+                tools.renderCheck(`#form-fetal-field${c}`, componentInfo[`field${c}`], (val) => {
+                    componentInfo[`field${c}`] = val
+                })
+            })
+        }
+
+        function getComponentInfo() {
+            return componentInfo
+        }
+
+        const tools = {
+            renderCheck: function (elem, value, callback) {
+                $(elem).each(function () {
+                    $(this).prop("checked", value)
+                })
+                $(elem).click(function () {
+                    callback($(this).prop('checked'));
+                });
+            },
+        }
+
+
+    </script>
+</body>
+
+</html>
