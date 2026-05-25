@@ -1,0 +1,155 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Peach-Editor 编辑器</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="jquery.min.js"></script>
+    <style>
+        .editor-form .m13y-field1-cell {
+            text-align: left;
+            vertical-align: bottom;
+        }
+
+        .editor-form .m13y-field-number {
+            width: 45px;
+            margin: 10px 0px;
+            outline: none;
+        }
+
+        .editor-form .m13y-field-date {
+            width: 100px;
+            outline: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="editor-form" style="padding: 20px;">
+        <table style="text-align:center;">
+            <tr>
+                <td colspan="3" class="m13y-field1-cell">
+                    是否闭经
+                    <select id="form-menst-1"></select>
+                </td>
+            </tr>
+            <tr>
+                <td>初潮年龄<input id="form-menst-2" class="m13y-field-number" type="number"></td>
+                <td>
+                    <div>
+                        月经持续
+                        <input id="form-menst-3" type="number" class="m13y-field-number">
+                        ~
+                        <input id="form-menst-4" type="number" class="m13y-field-number">
+                    </div>
+                    <div style="width: 200px;border:1px solid #000"></div>
+                    <div>
+                        生理周期
+                        <input id="form-menst-5" type="number" class="m13y-field-number">
+                        ~
+                        <input id="form-menst-6" type="number" class="m13y-field-number">
+                    </div>
+                </td>
+                <td>
+                    <input id="form-menst-7" type="number" class="m13y-field-number">
+                    <input id="form-menst-8" type="date" class="m13y-field-date">
+                </td>
+            </tr>
+        </table>
+    </div>
+    <script>
+        const options = [
+            { label: '未闭经', value: '0' },
+            { label: '已闭经', value: '1' },
+        ]
+        let componentInfo = {}
+        function render(baseInfo, newinfo) {
+            componentInfo = Object.assign(baseInfo, newinfo);
+            const menstSelectEnable = (val) => {
+                if (val == '0') {
+                    $("#form-menst-7").hide();
+                    $("#form-menst-8").show();
+                } else {
+                    $("#form-menst-7").show();
+                    $("#form-menst-8").hide();
+                }
+            }
+            menstSelectEnable(componentInfo.field1)
+            tools.renderSelect("#form-menst-1", options, componentInfo.field1, {}, (val) => {
+                menstSelectEnable(val)
+                componentInfo.field1 = val
+            })
+            const numopt1 = { min: 0, max: 150, step: 1 }
+            const numopt2 = { min: 0, max: 300, step: 1 }
+            tools.renderNumber("#form-menst-2", componentInfo.field2, numopt1, (val) => {
+                componentInfo.field2 = val
+            })
+            tools.renderNumber("#form-menst-3", componentInfo.field3, numopt1, (val) => {
+                componentInfo.field3 = val
+            })
+            tools.renderNumber("#form-menst-4", componentInfo.field4, numopt1, (val) => {
+                componentInfo.field4 = val
+            })
+            tools.renderNumber("#form-menst-5", componentInfo.field5, numopt2, (val) => {
+                componentInfo.field5 = val
+            })
+            tools.renderNumber("#form-menst-6", componentInfo.field6, numopt2, (val) => {
+                componentInfo.field6 = val
+            })
+            tools.renderNumber("#form-menst-7", componentInfo.field7, numopt1, (val) => {
+                componentInfo.field7 = val
+            })
+            tools.renderDate("#form-menst-8", componentInfo.field8, (val) => {
+                componentInfo.field8 = val
+            })
+        }
+
+        function getComponentInfo() {
+            return componentInfo
+        }
+
+        const tools = {
+            renderNumber: function (elem, value, opt, callback) {
+                $(elem).val(value)
+                $(elem).attr('min', opt.min || 0);
+                $(elem).attr('max', opt.max || 100);
+                $(elem).attr('step', opt.step || 1);
+                $(elem).on("change", function () {
+                    const newValue = $(this).val();
+                    if (callback) {
+                        callback(newValue);
+                    }
+                })
+            },
+            renderSelect: function (elem, list, value, opt, callback) {
+                const option = Object.assign({ textField: 'label', valueField: 'value' }, opt)
+                list.forEach(item => {
+                    $(elem).append(`<option value='${item[option.valueField]}'>${item[option.textField]}</option>`)
+                })
+                $(elem).val(value)
+                $(elem).on("change", function () {
+                    const newValue = $(this).val();
+                    const record = list.find(item => item[option.valueField] == newValue)
+                    if (callback) {
+                        callback(newValue, record);
+                    }
+                })
+            },
+            renderDate: function (elem, value, callback) {
+                $(elem).val(value)
+                $(elem).on("change", function () {
+                    const val = $(this).val();
+                    if (callback) {
+                        callback(val);
+                    }
+                })
+            },
+        }
+
+
+    </script>
+</body>
+
+</html>

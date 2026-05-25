@@ -1,0 +1,248 @@
+html,
+body {
+    padding: 0px;
+    margin: 0px;
+    font-size: 13px;
+    width: 100vw;
+    height: 100vh;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+}
+
+.edit-menu {
+    background-color: #f7f7f7;
+    padding: 4px;
+    border-bottom: 1px solid #bdbcbc;
+    justify-content: center;
+}
+
+.edit-status {
+    background-color: #f7f7f7;
+    padding: 4px;
+    border-top: 1px solid #bdbcbc;
+}
+
+.edit-content {
+    flex: 1 1 auto;
+    height: 0;
+    overflow: auto;
+    box-sizing: border-box;
+    margin: 0px;
+    padding: 20px;
+
+    background-color: #bcc2c7;
+    border-left: 1px solid #e6eaee;
+    border-right: 1px solid #e6eaee;
+
+    display: flex;
+    justify-content: center;
+}
+
+
+.editor-container {
+    position: relative;
+    flex: 0 0 auto;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, .102);
+    -webkit-box-shadow: 0 2px 4px 0 rgba(0, 0, 0, .102);
+    -moz-box-shadow: 0 2px 4px 0 #0000001a;
+
+    background: #fff;
+    border: 1px solid #e6eaee;
+
+}
+
+.editor-comments {
+    background-color: #bcc2c7;
+    width: 100px;
+    flex: 0 0 auto;
+    overflow: hidden;
+    position: relative;
+    box-sizing: border-box;
+}
+
+.editor-comments .comments-panel {
+    box-sizing: border-box;
+    border: 1px solid #d63737;
+    font-size: 1em;
+    background-color: #f5b4b4;
+    border-radius: 4px;
+    padding: 3px;
+    position: absolute;
+    width: 100%;
+
+}
+
+.editor-comments .comments-title {
+    color: #000;
+    font-weight: 700;
+    border-bottom: 1px solid #c76868;
+    display: flex;
+}
+
+
+
+.editor-comments .comments-title-lab {
+    flex: 1 1 auto;
+    flex-direction: column;
+}
+
+.editor-comments .comments-title-btn {
+    flex: 0 1 auto;
+    width: 20px;
+    text-align: center;
+    vertical-align: middle;
+    cursor: pointer;
+}
+
+.editor-comments .comments-title-btn:hover {
+    border: 1px solid #c76868;
+}
+
+.editor-input {
+    z-index: 0;
+    position: absolute;
+    width: 2px;
+}
+
+.editor-background-canvas {
+    z-index: 1;
+    background-color: #ffffff;
+    position: absolute;
+    display: inline-block;
+}
+
+.editor-textground-canvas {
+    z-index: 2;
+    display: inline-block;
+    position: absolute;
+}
+
+.editor-textground-svg {
+    z-index: 3;
+    display: inline-block;
+    position: absolute;
+}
+
+.editor-maskground-canvas {
+    z-index: 4;
+    display: inline-block;
+    position: absolute;
+}
+
+.editor-foreground-canvas {
+    z-index: 5;
+    position: absolute;
+    display: inline-block;
+    cursor: text;
+}
+
+.editor-continue-print {
+    z-index: 10;
+    background-color: #91a9ddcc;
+    position: absolute;
+    box-sizing: border-box;
+    display: none;
+    flex-direction: column;
+}
+
+.editor-continue-print .mark-panel {
+    flex: 1 1 auto;
+}
+
+.editor-continue-print .btns-panel {
+    flex: 0 0 auto;
+    height: 40px;
+    text-align: center;
+}
+
+.editor-continue-print .drag-panel {
+    flex: 0 0 auto;
+    height: 5px;
+    background-color: #cecece;
+    cursor: row-resize;
+    border: 1px dotted #636363;
+}
+
+
+.editor-continue-print .drag-panel-btn {
+    padding: 5px;
+    margin: 0 10px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.editor-form-about .product {
+    font-size: 20px;
+    line-height: 35px;
+}
+
+.editor-form-about .version {
+    font-size: 14px;
+    line-height: 26px;
+}
+
+.editor-form-about .webinfo {
+    font-size: 14px;
+    line-height: 26px;
+    justify-content: center;
+}
+
+.editor-form-about .webinfo .info-label {
+    width: 75px;
+    text-align: right;
+}
+
+.editor-form-about .webinfo .info-value {
+    width: 160px;
+    text-align: left;
+    margin-left: 10px;
+}
+
+.editor-pop-text {
+    padding: 5px;
+
+}
+
+.editor-pop-text .textarea {
+    resize: none;
+    outline: none;
+    width: 200px;
+    height: 60px;
+}
+
+.editor-pop-text .controll {
+    display: flex;
+    padding: 4px 0px;
+    justify-content: flex-end;
+}
+
+.editor-pop-text .controll .button {
+    margin-left: 10px;
+}
+
+.editor-watermark-canvas {
+    border: 1px solid #636363;
+    margin: 6px;
+}
+
+.editor-symbol-cell {
+    width: 40px;
+    height: 40px;
+    border: 1px solid #bbbbbb;
+    margin: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+.editor-symbol-cell:hover {
+    background-color: #636363;
+    color: #ffffff;
+}

@@ -1,0 +1,498 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Peach-Editor 编辑器</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="jquery.min.js"></script>
+    <style>
+        .editor-form .t10m-leg-table,
+        .editor-form .t10m-btn-table {
+            text-align: center;
+            border-collapse: collapse;
+        }
+
+        .editor-form .t10m-btn {
+            cursor: pointer;
+            min-width: 70px;
+        }
+
+        .editor-form .t10m-btn.big {
+            height: 50px;
+            width: 70px;
+        }
+
+        .editor-form .t10m-leg-table .tooth,
+        .editor-form .t10m-leg-table .surface,
+        .editor-form .t10m-leg-table .numerary {
+            display: inline-block;
+            border: 1px solid #c4c4c4;
+            text-align: center;
+            line-height: 28px;
+            height: 30px;
+            width: 30px;
+            cursor: pointer;
+            /* Safari */
+            -webkit-user-select: none;
+            /* Firefox */
+            -moz-user-select: none;
+            /* IE10+ */
+            -ms-user-select: none;
+            /* Standard */
+            user-select: none;
+        }
+
+        .editor-form .t10m-panel {
+            margin: 10px 4px;
+        }
+
+        .editor-form .t10m-leg-table .selected {
+            border: 1px solid #1146b9;
+            background-color: #b9b9b9;
+        }
+
+        .editor-form .t10m-leg-table .left {
+            text-align: right;
+            border-right: 2px solid #000;
+            padding: 4px;
+        }
+
+        .editor-form .t10m-leg-table .right {
+            text-align: left;
+            border-left: 2px solid #000;
+            padding: 4px;
+        }
+
+        .editor-form .t10m-leg-table .molars.up {
+            border-radius: 0 0 8px 8px;
+        }
+
+        .editor-form .t10m-leg-table .cuspid.up {
+            border-radius: 0 0 20px 20px;
+        }
+
+        .editor-form .t10m-leg-table .molars.down {
+            border-radius: 8px 8px 0 0;
+        }
+
+        .editor-form .t10m-leg-table .cuspid.down {
+            border-radius: 20px 20px 0 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="editor-form" style="padding: 10px;">
+        <div class="t10m-panel">
+            <table class="t10m-btn-table">
+                <tr>
+                    <td rowspan="2" style="width: 60px;">
+
+                    </td>
+                    <td>
+                        <button class="t10m-btn" data-event="aa-h">全口恒牙</button>
+                        <button class="t10m-btn" data-event="ua-h">上半口-恒</button>
+                        <button class="t10m-btn" data-event="da-h">下半口-恒</button>
+                        <button class="t10m-btn" data-event="lu-h">左上-恒</button>
+                        <button class="t10m-btn" data-event="ld-h">左下-恒</button>
+                        <button class="t10m-btn" data-event="ru-h">右上-恒</button>
+                        <button class="t10m-btn" data-event="rd-h">右下-恒</button>
+                    </td>
+                    <td rowspan="2">
+                        <button class="t10m-btn big" data-event="aa-c">清除</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <button class="t10m-btn" data-event="aa-r">全口乳牙</button>
+                        <button class="t10m-btn" data-event="ua-r">上半口-乳</button>
+                        <button class="t10m-btn" data-event="da-r">下半口-乳</button>
+                        <button class="t10m-btn" data-event="lu-r">左上-乳</button>
+                        <button class="t10m-btn" data-event="ld-r">左下-乳</button>
+                        <button class="t10m-btn" data-event="ru-r">右上-乳</button>
+                        <button class="t10m-btn" data-event="rd-r">右下-乳</button>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="t10m-panel">
+            <table class="t10m-leg-table">
+                <tr>
+                    <td rowspan="4" style="width: 60px;">
+                        <b>牙位</b>
+                    </td>
+                    <td class="left">
+                        <div class="tooth molars up deciduous" data-tname="E" data-area="ul">E</div>
+                        <div class="tooth molars up deciduous" data-tname="D" data-area="ul">D</div>
+                        <div class="tooth cuspid up deciduous" data-tname="C" data-area="ul">C</div>
+                        <div class="tooth cuspid up deciduous" data-tname="B" data-area="ul">B</div>
+                        <div class="tooth cuspid up deciduous" data-tname="A" data-area="ul">A</div>
+                    </td>
+                    <td class="right">
+                        <div class="tooth cuspid up deciduous" data-tname="A" data-area="ur">A</div>
+                        <div class="tooth cuspid up deciduous" data-tname="B" data-area="ur">B</div>
+                        <div class="tooth cuspid up deciduous" data-tname="C" data-area="ur">C</div>
+                        <div class="tooth molars up deciduous" data-tname="D" data-area="ur">D</div>
+                        <div class="tooth molars up deciduous" data-tname="E" data-area="ur">E</div>
+                    </td>
+                </tr>
+                <tr style="border-bottom: 2px solid #000;">
+                    <td class="left">
+                        <div class="tooth molars up permanent" data-tname="8" data-area="ul">8</div>
+                        <div class="tooth molars up permanent" data-tname="7" data-area="ul">7</div>
+                        <div class="tooth molars up permanent" data-tname="6" data-area="ul">6</div>
+                        <div class="tooth molars up permanent" data-tname="5" data-area="ul">5</div>
+                        <div class="tooth molars up permanent" data-tname="4" data-area="ul">4</div>
+                        <div class="tooth cuspid up permanent" data-tname="3" data-area="ul">3</div>
+                        <div class="tooth cuspid up permanent" data-tname="2" data-area="ul">2</div>
+                        <div class="tooth cuspid up permanent" data-tname="1" data-area="ul">1</div>
+                    </td>
+                    <td class="right">
+                        <div class="tooth cuspid up permanent" data-tname="1" data-area="ur">1</div>
+                        <div class="tooth cuspid up permanent" data-tname="2" data-area="ur">2</div>
+                        <div class="tooth cuspid up permanent" data-tname="3" data-area="ur">3</div>
+                        <div class="tooth molars up permanent" data-tname="4" data-area="ur">4</div>
+                        <div class="tooth molars up permanent" data-tname="5" data-area="ur">5</div>
+                        <div class="tooth molars up permanent" data-tname="6" data-area="ur">6</div>
+                        <div class="tooth molars up permanent" data-tname="7" data-area="ur">7</div>
+                        <div class="tooth molars up permanent" data-tname="8" data-area="ur">8</div>
+                    </td>
+                </tr>
+                <tr style="border-top: 2px solid #000;">
+                    <td class="left">
+                        <div class="tooth molars down permanent" data-tname="8" data-area="dl">8</div>
+                        <div class="tooth molars down permanent" data-tname="7" data-area="dl">7</div>
+                        <div class="tooth molars down permanent" data-tname="6" data-area="dl">6</div>
+                        <div class="tooth molars down permanent" data-tname="5" data-area="dl">5</div>
+                        <div class="tooth molars down permanent" data-tname="4" data-area="dl">4</div>
+                        <div class="tooth cuspid down permanent" data-tname="3" data-area="dl">3</div>
+                        <div class="tooth cuspid down permanent" data-tname="2" data-area="dl">2</div>
+                        <div class="tooth cuspid down permanent" data-tname="1" data-area="dl">1</div>
+                    </td>
+                    <td class="right">
+                        <div class="tooth cuspid down permanent" data-tname="1" data-area="dr">1</div>
+                        <div class="tooth cuspid down permanent" data-tname="2" data-area="dr">2</div>
+                        <div class="tooth cuspid down permanent" data-tname="3" data-area="dr">3</div>
+                        <div class="tooth molars down permanent" data-tname="4" data-area="dr">4</div>
+                        <div class="tooth molars down permanent" data-tname="5" data-area="dr">5</div>
+                        <div class="tooth molars down permanent" data-tname="6" data-area="dr">6</div>
+                        <div class="tooth molars down permanent" data-tname="7" data-area="dr">7</div>
+                        <div class="tooth molars down permanent" data-tname="8" data-area="dr">8</div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="left">
+                        <div class="tooth molars down deciduous" data-tname="E" data-area="dl">E</div>
+                        <div class="tooth molars down deciduous" data-tname="D" data-area="dl">D</div>
+                        <div class="tooth cuspid down deciduous" data-tname="C" data-area="dl">C</div>
+                        <div class="tooth cuspid down deciduous" data-tname="B" data-area="dl">B</div>
+                        <div class="tooth cuspid down deciduous" data-tname="A" data-area="dl">A</div>
+                    </td>
+                    <td class="right">
+                        <div class="tooth cuspid down deciduous" data-tname="A" data-area="dr">A</div>
+                        <div class="tooth cuspid down deciduous" data-tname="B" data-area="dr">B</div>
+                        <div class="tooth cuspid down deciduous" data-tname="C" data-area="dr">C</div>
+                        <div class="tooth molars down deciduous" data-tname="D" data-area="dr">D</div>
+                        <div class="tooth molars down deciduous" data-tname="E" data-area="dr">E</div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="t10m-panel">
+            <div style="display: inline-block;">
+                <table class="t10m-leg-table">
+                    <tr>
+                        <td style="width: 60px;"><b>牙面</b></td>
+                        <td>
+                            <div class="surface" data-type="La">La</div>
+                            <div class="surface" data-type="B">B</div>
+                            <div class="surface" data-type="F">F</div>
+                            <div class="surface" data-type="M">M</div>
+                            <div class="surface" data-type="O/I">O/I</div>
+                            <div class="surface" data-type="D">D</div>
+                            <div class="surface" data-type="L">L</div>
+                            <div class="surface" data-type="P">P</div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width: 60px;"><b>多生牙</b></td>
+                        <td style="text-align: left;">
+                            <div class="numerary" data-type="l"><sup>S</sup>|</div>
+                            <div class="numerary" data-type="r">|<sup>S</sup></div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div style="display: inline-block;">
+
+            </div>
+        </div>
+        <div class="t10m-panel">
+            <table class="t10m-leg-table">
+                <tr>
+                    <td style="width: 60px;">
+                        <b>表达式预览</b>
+                    </td>
+                    <td>
+                        <div style="width: 590px;height:100px;border: 1px solid #b1b1b1;">
+                            <table style="margin: 10px;font-size: 18px;border-collapse: collapse;">
+                                <tr style="border-bottom: 2px solid #000;">
+                                    <td class="left up" id="form-t10m-pre1"></td>
+                                    <td class="right up" id="form-t10m-pre2"></td>
+                                </tr>
+                                <tr style="border-top: 2px solid #000;">
+                                    <td class="left down" id="form-t10m-pre3"></td>
+                                    <td class="right down" id="form-t10m-pre4"></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <script>
+        let componentInfo = {}
+        //渲染编辑器
+        function render(baseInfo, newinfo) {
+            componentInfo = Object.assign(baseInfo, toothDiagram.create(), newinfo);
+            let current = undefined
+            const selectedCls = "selected"
+            const remopro = () => {
+                $(".surface").removeClass(selectedCls);
+                $(".numerary").removeClass(selectedCls);
+            }
+            const showpro = (tinfo) => {
+                $(".surface").removeClass(selectedCls);
+                $(".numerary").removeClass(selectedCls);
+                tinfo.surface.forEach(sf => {
+                    $(`.surface[data-type='${sf}']`).addClass(selectedCls)
+                })
+                $(`.numerary[data-type='${tinfo.numerary}']`).addClass(selectedCls)
+            }
+            const creattext = (arr) => {
+                let text = "&nbsp;"
+                arr.forEach(t => {
+                    if (t.show) {
+                        let temp = ""
+                        if (t.numerary == 'r') {
+                            temp = `(${t.name}<sup>S</sup>)`
+                        } else if (t.numerary == 'l') {
+                            temp = `(<sup>S</sup>${t.name})`
+                        } else {
+                            temp = `${t.name}`
+                        }
+                        if (t.surface.length > 0) {
+                            temp += `<sup>${t.surface.join(",")}</sup>`
+                        }
+                        text += temp
+                    }
+                })
+                return text
+            }
+            const prev = (tinfo) => {
+                $("#form-t10m-pre1").html(creattext(tinfo.top.left))
+                $("#form-t10m-pre2").html(creattext(tinfo.top.right))
+                $("#form-t10m-pre3").html(creattext(tinfo.bot.left))
+                $("#form-t10m-pre4").html(creattext(tinfo.bot.right))
+            }
+            const selt = (tinfo) => {
+                $(".tooth").removeClass(selectedCls);
+                $(".surface").removeClass(selectedCls);
+                $(".numerary").removeClass(selectedCls);
+                tinfo.top.left.forEach(t => {
+                    if (t.show)
+                        $(`.left>.up[data-tname="${t.name}"]`).addClass(selectedCls);
+                })
+                tinfo.top.right.forEach(t => {
+                    if (t.show)
+                        $(`.right>.up[data-tname="${t.name}"]`).addClass(selectedCls);
+                })
+                tinfo.bot.left.forEach(t => {
+                    if (t.show)
+                        $(`.left>.down[data-tname="${t.name}"]`).addClass(selectedCls);
+                })
+                tinfo.bot.right.forEach(t => {
+                    if (t.show)
+                        $(`.right>.down[data-tname="${t.name}"]`).addClass(selectedCls);
+                })
+
+            }
+            $(".t10m-btn").click(function () {
+                toothDiagram.selects(componentInfo, $(this).data("event"))
+                current = undefined
+                prev(componentInfo)
+                selt(componentInfo)
+            })
+            $(".tooth").click(function () {
+                toothDiagram.toggle(componentInfo, $(this).data("tname"), $(this).data("area"))
+                const tooth = toothDiagram.getTooth(componentInfo, $(this).data("tname"), $(this).data("area"))
+                if (tooth.show) {
+                    current = this
+                } else {
+                    current = undefined
+                }
+                prev(componentInfo)
+                selt(componentInfo)
+                showpro(tooth)
+            })
+            $(".surface").click(function () {
+                if (current) {
+                    toothDiagram.updateSurface(componentInfo, $(current).data("tname"), $(current).data("area"), $(this).data("type"))
+                    const tooth = toothDiagram.getTooth(componentInfo, $(current).data("tname"), $(current).data("area"))
+                    prev(componentInfo)
+                    showpro(tooth)
+                }
+            })
+            $(".numerary").click(function () {
+                if (current) {
+                    toothDiagram.updateNumerary(componentInfo, $(current).data("tname"), $(current).data("area"), $(this).data("type"))
+                    const tooth = toothDiagram.getTooth(componentInfo, $(current).data("tname"), $(current).data("area"))
+                    prev(componentInfo)
+                    showpro(tooth)
+                }
+            })
+            prev(componentInfo)
+            selt(componentInfo)
+        }
+
+        function getComponentInfo() {
+            return componentInfo
+        }
+
+        const toothDiagram = {
+            deciduous: "ABCDE",
+            permanent: "12345678",
+            create: function (param) {
+                const obj = {
+                    top: { left: [], right: [], },
+                    bot: { left: [], right: [], }
+                }
+                this.deciduous.split("").forEach(i => {
+                    obj.bot.left.unshift({ name: i, surface: [], numerary: "", show: false })
+                    obj.bot.right.push({ name: i, surface: [], numerary: "", show: false })
+                    obj.top.left.unshift({ name: i, surface: [], numerary: "", show: false })
+                    obj.top.right.push({ name: i, surface: [], numerary: "", show: false })
+                })
+                this.permanent.split("").forEach(i => {
+                    obj.bot.left.unshift({ name: i, surface: [], numerary: "", show: false })
+                    obj.bot.right.push({ name: i, surface: [], numerary: "", show: false })
+                    obj.top.left.unshift({ name: i, surface: [], numerary: "", show: false })
+                    obj.top.right.push({ name: i, surface: [], numerary: "", show: false })
+                })
+                return obj
+            },
+            selects: function (info, type) {
+                const arrs = [info.top.left, info.top.right, info.bot.left, info.bot.right]
+                const crear = () => {
+                    arrs.forEach(arr => {
+                        arr.forEach(e => {
+                            e.show = false
+                            e.surface = []
+                            e.numerary = ""
+                        })
+                    })
+                }
+                const select = (areas, isPer, value) => {
+                    areas.forEach(i => {
+                        arrs[i].forEach(e => e.show = (this.permanent.includes(e.name) == isPer) && value)
+                    })
+                }
+                crear()
+                switch (type) {
+                    case "aa-h":
+                        select([0, 1, 2, 3], true, true)
+                        break;
+                    case "ua-h":
+                        select([0, 1], true, true)
+                        break;
+                    case "da-h":
+                        select([2, 3], true, true)
+                        break;
+                    case "lu-h":
+                        select([0], true, true)
+                        break;
+                    case "ld-h":
+                        select([1], true, true)
+                        break;
+                    case "ru-h":
+                        select([2], true, true)
+                        break;
+                    case "rd-h":
+                        select([3], true, true)
+                        break;
+                    case "aa-r":
+                        select([0, 1, 2, 3], false, true)
+                        break;
+                    case "ua-r":
+                        select([0, 1], false, true)
+                        break;
+                    case "da-r":
+                        select([2, 3], false, true)
+                        break;
+                    case "lu-r":
+                        select([0], false, true)
+                        break;
+                    case "ld-r":
+                        select([1], false, true)
+                        break;
+                    case "ru-r":
+                        select([2], false, true)
+                        break;
+                    case "rd-r":
+                        select([3], false, true)
+                        break;
+                    default:
+                        break;
+                }
+            },
+            toggle: function (info, name, area) {
+                const tooth = this.getTooth(info, name, area)
+                if (tooth) {
+                    tooth.show = !tooth.show
+                }
+            },
+            updateSurface: function (info, name, area, type) {
+                const tooth = this.getTooth(info, name, area)
+                const index = tooth.surface.findIndex(e => e == type)
+                if (index >= 0) {
+                    tooth.surface.splice(index, 1)
+                } else {
+                    tooth.surface.push(type)
+                }
+            },
+            updateNumerary: function (info, name, area, type) {
+                const tooth = this.getTooth(info, name, area)
+                if (tooth.numerary == type) {
+                    tooth.numerary = ""
+                } else {
+                    tooth.numerary = type
+                }
+            },
+            getTooth(info, name, area) {
+                let tooth
+                switch (area) {
+                    case "ul":
+                        tooth = info.top.left.find(e => e.name == name)
+                        break;
+                    case "ur":
+                        tooth = info.top.right.find(e => e.name == name)
+                        break;
+                    case "dl":
+                        tooth = info.bot.left.find(e => e.name == name)
+                        break;
+                    case "dr":
+                        tooth = info.bot.right.find(e => e.name == name)
+                        break;
+                    default:
+                        break;
+                }
+                return tooth
+            }
+        }
+    </script>
+</body>
+
+</html>

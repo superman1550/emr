@@ -1,0 +1,2 @@
+window.createKatexBase64=function(e){var t=document.getElementById("katex-preview"),n={scale:4,useCORS:!0,logging:!1,backgroundColor:null,dpi:4*window.devicePixelRatio};html2canvas(t,n).then((function(t){e(t.toDataURL("image/png"))})).catch((function(e){alert(e)}))},window.onload=function(){var e=document.getElementById("katex-input"),t=document.getElementById("katex-preview");e.addEventListener("input",(function(){var e=this.value;katex.render(e,t)}))};
+//# sourceMappingURL=peach-katex-min.js.map
