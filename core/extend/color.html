@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>颜色选择器</title>
+    <style>
+        body {
+            padding: 0 10px;
+            margin: 0;
+        }
+
+        .color-picker {
+            width: 400px;
+            height: 320px;
+            background: white;
+            display: flex;
+            flex-direction: column;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .picker-area {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            gap: 15px;
+        }
+
+        .color-canvas {
+            width: 100%;
+            height: 240px;
+            position: relative;
+            cursor: pointer;
+            overflow: hidden;
+            border-radius: 4px;
+            background: linear-gradient(to bottom, transparent 0%, #000 100%),
+                linear-gradient(to right, #fff 0%, transparent 100%);
+        }
+
+        .canvas-slider {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: white;
+            border: 2px solid #333;
+            position: absolute;
+            transform: translate(-50%, -50%);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        .hue-slider-container {
+            width: 100%;
+            height: 30px;
+            background: linear-gradient(to right,
+                    #ff0000, #ff8000, #ffff00, #80ff00,
+                    #00ff00, #00ff80, #00ffff, #0080ff,
+                    #0000ff, #8000ff, #ff00ff, #ff0080, #ff0000);
+            position: relative;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+
+        .hue-slider {
+            width: 8px;
+            height: 28px;
+            background: white;
+            border: 1px solid #0c0c0c;
+            position: absolute;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+            pointer-events: none;
+        }
+
+        .preview-area {
+            display: flex;
+            gap: 10px;
+        }
+
+        .color-preview {
+            width: 40px;
+            height: 40px;
+            border-radius: 4px;
+            border: 1px solid #e0e0e0;
+        }
+
+        .hex-value {
+            flex: 1;
+            background: #f8f9fa;
+            text-align: center;
+            color: #333;
+            line-height: 40px;
+            padding: 0 10px;
+            border-radius: 4px;
+            border: 1px solid #e0e0e0;
+            font-family: monospace;
+            font-size: 20px;
+            font-weight: 700;
+        }
+    </style>
+    <script src="color-peach-min.js"></script>
+</head>
+
+<body>
+    <div class="color-picker">
+        <div class="picker-area">
+            <div class="color-canvas" id="colorCanvas">
+                <div class="canvas-slider" id="canvasSlider"></div>
+            </div>
+
+            <div class="hue-slider-container" id="hueSliderContainer">
+                <div class="hue-slider" id="hueSlider"></div>
+            </div>
+
+            <div class="preview-area">
+                <div class="color-preview" id="colorPreview"></div>
+                <div class="hex-value" id="hexValue">#3498db</div>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+        function initColorPack(color) {
+            const colorCanvas = document.getElementById('colorCanvas');
+            const canvasSlider = document.getElementById('canvasSlider');
+            const hueSliderContainer = document.getElementById('hueSliderContainer');
+            const hueSlider = document.getElementById('hueSlider');
+            const colorPreview = document.getElementById('colorPreview');
+            const hexValue = document.getElementById('hexValue');
+            EditorColor.init(colorCanvas, canvasSlider, hueSliderContainer, hueSlider, colorPreview, hexValue, color)
+        }
+
+        function getColorValue(){
+            return EditorColor.getValue()
+        }
+    </script>
+</body>
+
+</html>
